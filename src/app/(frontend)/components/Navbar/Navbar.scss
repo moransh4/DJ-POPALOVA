@@ -1,0 +1,126 @@
+@import '../../styles/variables';
+
+.nav {
+    width: 100%;
+    //height: 65px;
+    position: fixed;
+    z-index: 1000; /* High z-index to ensure it's on top */
+    //line-height: 65px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: rgba(0, 0, 0, 0.8); /* Darker than video opacity */
+    transition: background-color 0.6s ease, color 0.6s ease, transform 0.3s ease; /* Add transform to transition */
+
+    &.scrolled {
+      background-color: $background-dark; /* Black when scrolled */
+
+      .navlinks li a {
+        color: $text-light; /* Change text color to white when scrolled */
+      }
+    }
+
+    &.hidden {
+      transform: translateY(-100%); /* Move navbar up to hide */
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+  
+    .logo a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 2.5rem;
+      img{
+        width: 100px; /* Reverted width for the logo */
+        vertical-align: middle;
+        background-size: contain;
+      }
+  
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  
+    .main_list {
+      display: flex;
+      list-style: none;
+  
+      ul {
+        display: flex;
+        margin: 0;
+        padding: 0;
+  
+        li {
+          margin-right: 2rem;
+          list-style: none;
+          a {
+            text-decoration: none;
+            color: $text-light; /* Changed to white */
+            font-size: 1.6rem;
+            font-weight: bold; /* Added bold font-weight */
+  
+            &:hover {
+              color: $primary-color;
+            }
+          }
+        }
+      }
+    }
+  
+    .navTrigger {
+      display: none;
+      cursor: pointer;
+  
+      i {
+        background-color: $text-light;
+        border-radius: 2px;
+        content: '';
+        display: block;
+        width: 30px;
+        height: 4px;
+        margin: 5px 0;
+        transition: all 0.4s ease;
+      }
+    }
+  
+    /* Mobile Styles */
+    @media screen and (max-width: 768px) {
+      .main_list {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 110px;
+        right: 0;
+        background-color: #111;
+        width: 100%;
+        height: calc(100vh - 100px);
+        justify-content: center;
+        align-items: center;
+  
+        ul {
+          flex-direction: column;
+  
+          li {
+            margin: 1rem 0;
+  
+            a {
+              font-size: 2rem;
+            }
+          }
+        }
+      }
+  
+      .main_list.show_list {
+        display: flex;
+      }
+  
+      .navTrigger {
+        display: block;
+      }
+    }
+  }

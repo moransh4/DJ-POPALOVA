@@ -1,0 +1,234 @@
+@import '../../styles/variables';
+
+#contact-section {
+  background-color: $background-dark; /* Dark background */
+  padding: 80px 15px;
+  color: $text-light;
+  text-align: center;
+  direction: rtl; /* Right-to-left direction */
+  min-height: 80vh; /* Adjust height as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .contact-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    color: $primary-color; /* Accent color */
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  .contact-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top in the flex container */
+    gap: 50px; /* Space between the form and social media */
+    max-width: 1200px;
+    width: 100%;
+    margin-top: 30px;
+
+    .contact-form-wrapper {
+      flex: 1; /* Take up available space */
+      min-width: 400px; /* Ensure form has a decent minimum width */
+      max-width: 600px;
+
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        padding: 30px;
+        background-color: $secondary-color; /* Darker background for the form itself */
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+        .form-group-name {
+          display: flex;
+          gap: 20px;
+
+          input {
+            flex: 1;
+          }
+        }
+
+        .form-group {
+          width: 100%;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+          width: 100%;
+          padding: 15px;
+          border: 1px solid #444; /* Darker border */
+          border-radius: 5px;
+          background-color: #333; /* Even darker input background */
+          color: $text-light;
+          font-size: 1rem;
+          font-family: inherit; /* Ensure textarea inherits font-family from parent */
+
+          &::placeholder {
+            color: #aaa;
+          }
+
+          &:focus {
+            border-color: $primary-color; /* Accent color on focus */
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.5);
+          }
+        }
+
+        textarea {
+          resize: vertical; /* Allow vertical resizing */
+        }
+
+        .submit-button {
+          background-color: $primary-color; /* Accent color for button */
+          color: $text-light;
+          border: none;
+          padding: 15px 30px;
+          border-radius: 5px;
+          font-size: 1.1rem;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+
+          &:hover {
+            background-color: darken($primary-color, 10%); /* Slightly darker on hover */
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+
+    .social-media-wrapper {
+      flex: 1; /* Take up available space */
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      background-color: $secondary-color;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
+
+      h3 {
+        font-size: 1.8rem;
+        color: $primary-color;
+        margin-bottom: 2rem;
+        font-weight: bold;
+      }
+
+      .social-icons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px; /* Space between social icons */
+
+        .social-icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 60px; /* Size of the round icon */
+          height: 60px; /* Size of the round icon */
+          border-radius: 50%;
+          background-color: $background-dark; /* Dark background for icons */
+          border: 2px solid $primary-color; /* Accent border */
+          color: $text-light; /* Icon color */
+          text-decoration: none;
+          transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+
+          &:hover {
+            background-color: $primary-color; /* Accent color on hover */
+            transform: translateY(-5px) scale(1.1);
+            border-color: $text-light; /* Change border on hover */
+            color: $text-dark; /* Icon color on hover */
+          }
+
+          svg {
+            width: 28px;
+            height: 28px;
+            stroke: currentColor; /* Inherit color from parent */
+          }
+        }
+      }
+
+      .contact-info-wrapper {
+        display: flex;
+        flex-direction: column;
+        
+        .phone-number {
+          font-size: 1.2rem;
+          margin-top: 1rem;
+        }
+
+        .email {
+          font-size: 1.2rem;
+          margin-top: 1rem;
+        }
+      }
+
+
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 10px;
+    min-height: auto; /* Allow height to fit content on mobile */
+
+    .contact-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-content {
+      flex-direction: column; /* Stack vertically on mobile */
+      gap: 40px; /* Space between stacked form and social media */
+
+      .contact-form-wrapper {
+        min-width: 100%;
+        max-width: 100%;
+      }
+
+      .social-media-wrapper {
+        min-width: unset;
+        max-width: 100%;
+
+        h3 {
+          margin-bottom: 1.5rem;
+        }
+
+        .social-icons {
+          gap: 15px;
+          .social-icon {
+            width: 50px;
+            height: 50px;
+            svg {
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
+      }
+    }
+
+    .contact-form {
+      padding: 20px;
+      gap: 15px;
+
+      .form-group-name {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    .submit-button {
+      padding: 12px 25px;
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,0 +1,189 @@
+@import '../../styles/variables';
+
+#reviews-section {
+    background-color: $primary-color; /* Changed background to primary-color for alternation */
+    padding: 80px 15px;
+    color: $text-light;
+    text-align: center;
+    direction: rtl; /* Right-to-left direction */
+    min-height: 100vh; /* Ensure section takes full viewport height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .reviews-title {
+      color: $text-dark; /* Changed to dark text for contrast with primary-color background */
+    }
+
+    .swiper {
+      width: 100%;
+      // max-width: 1200px;
+      padding-top: 50px; /* Added padding to the top of the Swiper */
+      padding-bottom: 50px; /* Space for pagination */
+      .swiper-slide {
+        width: 350px; /* Set fixed width for desktop slides */
+        display: flex;
+        /* Removed justify-content: center to allow Swiper's centeredSlides to work */
+        align-items: center;
+        @media screen and (max-width: 450px) {
+          width: 100% !important;
+        }
+      }
+    }
+
+    .review-card {
+      background-color: $secondary-color; /* Darker background for cards */
+      border-radius: 15px;
+      padding: 25px; /* Reduced padding */
+      height: 600px; /* Set a fixed height for consistency */
+      position: relative; /* Add position relative for absolute children */
+      overflow: hidden; /* Hide overflow for images that might exceed bounds */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 100%; /* Ensure cards don't take full width on large screens */
+
+      &:hover {
+        transform: translateY(-15px) scale(1.02); /* More pronounced lift and slight scale */
+        box-shadow: 
+          0 -8px 25px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6), /* Top glow */
+          0 12px 35px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6); /* Bottom glow */
+      }
+
+      .review-text {
+        font-size: 1rem; /* Reduced font size */
+        line-height: 1.6;
+        margin-bottom: 1rem; /* Reduced margin */
+        font-style: italic;
+        color: #f0f0f0; // Keeping this light grey for contrast, not in variables
+      }
+
+      .client-name {
+        font-size: 1.1rem; /* Reduced font size */
+        font-weight: bold;
+        color: $primary-color; /* Accent color for client name */
+        margin-bottom: 0.3rem; /* Reduced margin */
+      }
+
+      .review-date {
+        font-size: 0.8rem; /* Reduced font size */
+        color: #ccc; // Keeping this light grey for contrast, not in variables
+      }
+
+      .reviewer-avatar {
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border: 3px solid $primary-color; /* Accent border for the avatar */
+      }
+
+      .reviewer-picture {
+        display: none; /* Hide the old smaller avatar */
+      }
+
+      .reviewer-picture-full {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+        border-radius: 15px; /* Match card border-radius */
+      }
+
+      .star-rating {
+        display: flex;
+        gap: 0.2rem;
+        margin-bottom: 1rem;
+
+        .star {
+          width: 20px;
+          height: 20px;
+          color: $star-empty; /* Default star color */
+
+          &.filled {
+            color: $star-filled; /* Gold color for filled stars */
+          }
+        }
+      }
+    }
+
+    /* Swiper Navigation and Pagination Overrides */
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: $primary-color; /* Accent color for navigation arrows */
+      top: 50%; /* Center vertically */
+      transform: translateY(-50%);
+      font-size: 2rem;
+
+      &::after {
+        font-size: 2rem; /* Ensure consistent icon size */
+      }
+    }
+
+    .swiper-pagination-bullet {
+      background-color: $star-empty; /* Default pagination dot color */
+      opacity: 0.8;
+
+      &.swiper-pagination-bullet-active {
+        background-color: $primary-color; /* Active dot accent color */
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      padding: 60px 10px;
+
+      .reviews-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .swiper {
+        padding-bottom: 40px;
+        /* Removed justify-content: center from swiper-slide here as well */
+      }
+
+      .swiper-slide {
+        width: 100%; /* Make slides full width on mobile */
+      }
+
+      .review-card {
+        padding: 20px 15px; /* Adjusted padding for mobile */
+        // height: 220px; /* Adjusted height for mobile */
+        /* Removed max-width for mobile, letting swiper-slide width control */
+
+        .review-text {
+          font-size: 0.9rem; /* Adjusted font size for mobile */
+          line-height: 1.5;
+        }
+
+        .client-name {
+          font-size: 1rem; /* Adjusted font size for mobile */
+        }
+
+        &:hover {
+          transform: none; /* Disable hover transform on mobile */
+          box-shadow: none; /* Disable hover box-shadow on mobile */
+        }
+      }
+
+      .swiper-button-next,
+      .swiper-button-prev {
+        font-size: 1.5rem;
+
+        &::after {
+          font-size: 1.5rem;
+        }
+      }
+
+      .reviewer-picture-full {
+        border-radius: 15px; /* Ensure mobile images also have border-radius */
+      }
+    }
+  }

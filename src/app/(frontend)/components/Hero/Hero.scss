@@ -1,0 +1,96 @@
+@import '../../styles/variables';
+
+#hero-section {
+  position: relative;
+  z-index: 1; /* Lower z-index than Navbar */
+  width: 100%;
+  height: 100vh; /* Ensure full viewport height */
+  overflow: hidden;
+
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Re-adding object-fit for local video */
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.6; /* Added opacity */
+
+    /* Removed iframe specific styles */
+  }
+
+  .hero-title-container {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; /* Ensure title is above video controls if they overlap */
+    width: 100%;
+    text-align: center;
+    color: $text-light;
+
+    h1 {
+      font-family: "Noto Sans Hebrew", sans-serif;
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .scroll-down-arrow {
+      margin-top: 20px; /* Space between title and arrow */
+      cursor: pointer;
+      animation: bounce 2s infinite;
+
+      svg {
+        stroke: red; // Keeping red for the arrow as it's a specific design choice
+        width: 36px;
+        height: 36px;
+      }
+    }
+  }
+
+  .hero-controls-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2; /* Ensure controls are above video */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+
+    button {
+      background-color: $background-dark;
+      color: $text-light;
+      border: 2px solid $text-light;
+      padding: 10px;
+      font-size: 0;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        background-color: $secondary-color; // Using secondary-color for hover
+        border-color: $text-light;
+      }
+
+      svg {
+        stroke: $text-light;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}

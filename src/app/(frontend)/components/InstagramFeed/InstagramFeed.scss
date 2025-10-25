@@ -1,0 +1,122 @@
+@import '../../styles/variables';
+
+#instagram-feed-section {
+  background-color: $primary-color; /* Changed background to primary color for alternation */
+  padding: 80px 15px;
+  color: $text-light;
+  text-align: center;
+  direction: rtl; /* Right-to-left direction */
+  min-height: 100vh; /* Adjust height as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+
+  .instagram-feed-title {
+    color: $text-dark; /* Accent color */
+  }
+
+  .instagram-posts-grid {
+    display: flex; /* Changed to flexbox */
+    // Removed flex-wrap: wrap; to keep all items on one line
+    white-space: nowrap; /* Keep all items on a single line */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    justify-content: center;
+    // Removed align-items: center; as it's not relevant for single line overflow
+    gap: 15px; /* Set gap to 15px */
+    max-width: 1200px;
+    width: 100%;
+    margin-top: 30px;
+    // Removed grid-template-columns, align-content as they are grid-specific
+  }
+
+  .instagram-post-item {
+    position: relative; /* Re-enable position for absolute children */
+    width: 550px; /* Fixed width */
+    height: 650px; /* Fixed height */
+    padding-bottom: 0;
+    min-height: unset; /* No longer needed with fixed height */
+    background-color: $secondary-color; /* Placeholder background */
+    border-radius: 5px;
+    overflow: hidden; /* Re-enable overflow hidden */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Re-enable box-shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Re-enable transition */
+    cursor: pointer;
+    border: 5px solid $text-light; /* White border */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    iframe{
+        min-width: auto !important;
+        height: -webkit-fill-available !important;
+        margin: 0 !important;
+    }
+
+    blockquote.instagram-media {
+      margin: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-width: unset !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      box-sizing: border-box;
+
+      & > div {
+        height: 100% !important;
+        padding: 0 !important;
+        box-sizing: border-box;
+
+        iframe {
+          width: 100% !important;
+          height: 100% !important;
+          display: block;
+        }
+      }
+    }
+
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 10px;
+    min-height: 60vh;
+
+    .instagram-feed-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      line-height: 1; /* Set line-height to be the same as font-size for mobile */
+    }
+
+    .instagram-posts-grid {
+      grid-template-columns: unset;
+      display: flex;
+      // Removed flex-wrap: wrap; for mobile too
+      white-space: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start; /* Align items to the start for scroll snap */
+      // Removed align-items: center; for mobile
+      gap: 15px;
+      scroll-snap-type: x mandatory; /* Enable horizontal scroll snapping */
+      scroll-behavior: smooth; /* Smooth scrolling between snaps */
+      scroll-padding-left: 10px; /* Adjust if your grid has left padding */
+      -webkit-overflow-scrolling: touch; /* Enhance scrolling on iOS */
+    }
+
+    .instagram-post-item {
+      width: 280px;
+      height: 330px;
+      padding-bottom: 0;
+      min-height: unset;
+      border: 3px solid $text-light;
+      flex-shrink: 0; /* Prevent items from shrinking */
+      scroll-snap-align: center; /* Make each item snap to the center */
+      // Removed margin-left: 10px; to avoid extra spacing
+
+      &:last-child {
+        // Removed margin-right: 10px; to avoid extra spacing
+      }
+    }
+  }
+}

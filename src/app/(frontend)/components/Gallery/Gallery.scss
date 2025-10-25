@@ -1,0 +1,98 @@
+@import '../../styles/variables';
+
+#gallery-section {
+  background-color: $background-dark; /* Changed background to dark for alternation */
+  padding: 80px 15px;
+  color: $text-dark; /* Changed text color to dark for contrast */
+  text-align: center;
+  direction: rtl; /* Right-to-left direction */
+  min-height: 100vh; /* Ensure section takes full viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .gallery-title {
+    display: none; /* Hide the title */
+    /* font-size: 3rem; */
+    /* margin-bottom: 3rem; */
+    /* color: $text-dark; */
+    /* font-weight: bold; */
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid columns */
+    gap: 0px; /* Removed gap between images */
+    max-width: 1400px; /* Max width for the grid */
+    width: 100%;
+    margin-top: 30px;
+    /* Reverted grid-auto-rows and grid-auto-flow: dense */
+  }
+
+  .gallery-item {
+    position: relative;
+    width: 100%;
+    grid-column: span 1; 
+    padding-bottom: 75%; /* Aspect ratio 4:3 (height is 75% of width) */
+    background-color: $secondary-color; /* Placeholder background */
+    border-radius: 0; /* Removed border-radius */
+    overflow: hidden;
+    border: 5px solid $text-light; /* Thinner white border 5px */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    /* Styles for different image sizes within the grid */
+    &:nth-child(3n + 1) { /* Every 3rd item starting from 1st */
+      grid-column: span 3; /* Make it wider */
+      padding-bottom: 50%; /* Adjust aspect ratio for wider images */
+    }
+
+    &:nth-child(4n + 2) { /* Every 4th item starting from 2nd */
+      grid-row: span 4; /* Make it taller */
+      padding-bottom: 150%; /* Adjust aspect ratio for taller images (e.g., 3:2) */
+    }
+
+    /* Removed nth-child(5n + 3) rule */
+
+    &:hover {
+      .gallery-image {
+        transform: scale(1.1); /* Image resize effect on hover */
+      }
+    }
+
+    .gallery-image {
+      object-fit: cover;
+      border-radius: 0; /* Remove border-radius here, it's on the item */
+      transition: transform 0.3s ease; /* Smooth transition for scale */
+    }
+  }
+
+  /* Removed Swiper Navigation and Pagination Overrides */
+  /* Removed Swiper specific styling */
+
+  @media (max-width: 768px) {
+    padding: 60px 10px;
+
+    .gallery-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust for mobile */
+      gap: 0px; /* Removed gap on mobile */
+    }
+
+    .gallery-item {
+      padding-bottom: 100%; /* Square aspect ratio on mobile */
+      border: 5px solid $text-light; /* Thinner border on mobile */
+      border-radius: 0; /* Removed border-radius for mobile */
+
+      &:nth-child(3n + 1), &:nth-child(4n + 2) {
+        grid-column: span 1; /* Reset to single column on mobile */
+        grid-row: span 1; /* Reset to single row on mobile */
+        padding-bottom: 100%; /* Keep square on mobile */
+      }
+    }
+  }
+}

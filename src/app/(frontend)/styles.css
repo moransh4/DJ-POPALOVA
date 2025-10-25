@@ -1,3 +1,4 @@
+
 :root {
   --font-mono: 'Roboto Mono', monospace;
 }
@@ -24,7 +25,6 @@ body {
   font-family: system-ui;
   font-size: 18px;
   line-height: 32px;
-
   margin: 0;
   color: rgb(1000, 1000, 1000);
 
@@ -63,6 +63,19 @@ h1 {
   }
 }
 
+h2 {
+  margin: 40px 0;
+  font-size: 3rem;
+  line-height: 3rem;
+  font-weight: bold;
+
+
+  @media (max-width: 400px) {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
+}
+
 p {
   margin: 24px 0;
 
@@ -89,19 +102,20 @@ svg {
   vertical-align: middle;
 }
 
+
 .home {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100vh;
-  padding: 45px;
-  max-width: 1024px;
-  margin: 0 auto;
+  /* height: 100vh; */
+  /* padding: 45px;
+  max-width: 1024px; */
+  /* margin: 0 auto; */
   overflow: hidden;
 
   @media (max-width: 400px) {
-    padding: 24px;
+    /* padding: 24px; */
   }
 
   .content {
@@ -140,25 +154,11 @@ svg {
     }
   }
 
-  .footer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    @media (max-width: 1024px) {
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    .codeLink {
-      text-decoration: none;
-      padding: 0 0.5rem;
-      background: rgb(60, 60, 60);
-      border-radius: 4px;
-    }
+  section {
+    width: 100%;
+    /* min-height: 100vh; */
+    /* padding: 50px; */
   }
+
+
 }

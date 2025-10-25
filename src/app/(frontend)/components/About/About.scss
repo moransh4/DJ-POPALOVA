@@ -1,0 +1,111 @@
+@import '../../styles/variables';
+
+#about-section {
+    display: flex;
+    flex-direction: row; /* Horizontal layout for image and text */
+    align-items: center; /* Align items to the start (top) to ensure image stretches with text */
+    justify-content: center;
+    background-color: $background-dark; /* Changed background to dark */
+    direction: ltr; /* Changed to LTR for visual image-left, text-right */
+    padding: 0;
+    color: $text-light; /* Changed default text color to light */
+    flex-wrap: nowrap;
+    gap: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    background-image: none; /* Removed linear-gradient for alternating background */
+
+    h2 {
+      display: none; /* Hide the h2 */
+      /* Removed all h2 specific styling */
+    }
+
+    .about-image {
+      display: block;
+      flex: 0 0 50%;
+      max-width: 50%;
+      /* order: -1; */ /* Removed order property */
+      height: 100vh;
+      position: relative;
+      top: auto;
+      overflow: hidden;
+      background-image: url('./images/about.jpg');
+      background-size: cover;
+      background-position: -500px;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      border-radius: 0;
+      box-shadow: none;
+      opacity: 0.6;
+    }
+
+    .about-content {
+      flex: 0 0 50%;
+      max-width: 50%;
+      text-align: center; /* Changed to center align text */
+      padding: 30px;
+      overflow-y: auto;
+      font-weight: bold;
+      direction: rtl;
+      
+      p {
+        font-size: 1rem;
+        line-height: 1.4;
+        margin-bottom: 0.6rem;
+        color: $text-light; /* Changed paragraph text color to light */
+        @media (max-width: 768px) {
+          font-size: 0.9rem;
+        }
+      }
+
+      .cta-button {
+        display: inline-block;
+        padding: 8px 18px;
+        background-color: #007bff; // This color is not in variables, keeping it for now
+        color: $text-light;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: normal;
+        font-size: 0.8rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        margin-top: 1rem;
+
+        &:hover {
+          background-color: #0056b3; // This color is not in variables, keeping it for now
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      padding: 30px 15px;
+      min-height: auto;
+
+      h2 {
+        display: none; /* Hide the h2 on mobile too */
+      }
+
+      .about-image {
+        order: 0;
+        position: relative;
+        height: 40vh;
+        max-width: 100%;
+        flex: 0 0 100%;
+        margin-bottom: 20px;
+        background-attachment: scroll;
+
+        img {
+          /* Removed img-specific styles, as it's now a background-image */
+        }
+      }
+
+      .about-content {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0;
+        text-align: center;
+        overflow-y: visible;
+      }
+    }
+  }

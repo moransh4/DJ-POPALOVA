@@ -1,0 +1,117 @@
+@import '../../styles/variables';
+
+#work-with-section {
+  background-color: $background-dark; // Changed to background-dark for alternation
+  padding: 80px 15px;
+  color: $text-light;
+  text-align: center;
+  direction: rtl;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .work-with-title {
+    color: $primary-color;
+  }
+
+  .swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 250px; /* Match work-with-card width */
+      height: 300px; /* Match work-with-card height */
+    }
+  }
+
+  /* Swiper Navigation Overrides */
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $primary-color; /* Accent color for navigation arrows */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    font-size: 2rem;
+
+    &::after {
+      font-size: 2rem; /* Ensure consistent icon size */
+    }
+  }
+
+  .work-with-card {
+    background-color: $secondary-color;
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 250px; // Fixed width for cards
+    height: 300px; // Fixed height for cards
+
+    &:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow:
+        0 -8px 25px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6),
+        0 12px 35px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: $text-light;
+    }
+
+    .work-with-image {
+      width: 150px; /* Set fixed width */
+      height: 150px; /* Set fixed height */
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid $primary-color;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 10px;
+    min-height: auto; /* Allow height to fit content on mobile */
+
+
+    .swiper {
+      padding-top: 40px;
+      padding-bottom: 40px;
+
+      .swiper-slide {
+        width: 200px; /* Match work-with-card width for mobile */
+        height: 250px; /* Match work-with-card height for mobile */
+      }
+    }
+
+    .work-with-card {
+      width: 200px; // Adjust for mobile
+      height: 250px; // Adjust for mobile
+      padding: 20px;
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      .work-with-image {
+        width: 150px; /* Set fixed width for mobile */
+        height: 150px; /* Set fixed height for mobile */
+      }
+
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,95 @@
+@import '../../styles/variables';
+
+#services-section {
+    background-color: $primary-color; /* Green accent background */
+    padding: 80px 15px;
+    color: $text-dark; /* Black text color */
+    text-align: center;
+    direction: rtl;
+    // min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .services-title {
+      color: $text-dark; /* Changed to black */
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      //max-width: 1200px;
+      width: 100%;
+      margin-bottom: 3rem;
+
+      .service-item {
+        background-color: $text-light; /* Light background for cards */
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+        @media (min-width: 769px) {
+          &:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); /* Adjusted shadow for light background */
+          }
+        }
+
+        img {
+          width: 80px;
+          height: 80px;
+          object-fit: contain;
+          margin-bottom: 1rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+          font-weight: bold;
+          color: $text-dark; /* Changed to black */
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      padding: 60px 15px;
+
+      .services-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .service-item {
+        padding: 20px;
+
+        &:hover, &:active { /* Disable hover and active effects for mobile */
+          transform: none;
+          box-shadow: none;
+        }
+
+        img {
+          width: 60px;
+          height: 60px;
+        }
+
+        h3 {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
