@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import aboutImage from './images/about.jpg'; // Adjust the path as necessary
+import React from 'react';
 import './About.scss';
 
 const About = () => {

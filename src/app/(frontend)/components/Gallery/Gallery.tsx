@@ -16,11 +16,8 @@ import './Gallery.scss';
 // Define the type for a gallery image item
 interface GalleryImage {
   id: string;
-  altText: string;
-  image: { // Payload upload type includes id and url
-    id: string;
-    url: string;
-  };
+  alt: string;
+  url: string;
 }
 
 const Gallery = () => {
@@ -65,11 +62,11 @@ const Gallery = () => {
     <section id="gallery-section">
       {/* <h2 className="gallery-title">הגלריה שלי</h2> Removed the title */}
       <div className="gallery-grid">
-        {galleryImages.map((image) => (
-          <div key={image.id} className="gallery-item">
+        {galleryImages.map((item) => (
+          <div key={item.id} className="gallery-item">
             <Image
-              src={image.url}
-              alt={image.alt}
+              src={item.url}
+              alt={item.alt}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive sizes
               className="gallery-image"

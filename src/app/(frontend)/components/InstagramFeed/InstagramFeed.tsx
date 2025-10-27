@@ -16,8 +16,9 @@ const instagramEmbeds = [
 const InstagramFeed = () => {
   // useEffect to re-trigger Instagram's embed script if content is loaded dynamically
   useEffect(() => {
-    if (window.instgrm) {
-      window.instgrm.Embeds.process();
+    const w = window as any;
+    if (w && typeof w.instgrm !== 'undefined') {
+      w.instgrm.Embeds.process();
     }
   }, []);
 

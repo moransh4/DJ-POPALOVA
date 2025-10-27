@@ -8,7 +8,7 @@ const Footer = () => {
   
   useEffect(() => {
     const handleScroll = () => {
-      const reviewsSection = document.getElementById('reviews-section');
+      const reviewsSection = document.getElementById('about-section');
       if (reviewsSection) {
         const sectionTop = reviewsSection.getBoundingClientRect().top;
         const scrolledPast = sectionTop <= 0;
