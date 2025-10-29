@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const WorkWith: CollectionConfig = {
   slug: 'work-with',
+  access: {
+    // Allow public read access so the frontend can fetch this collection
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'image' , 'sort'], // Explicitly include 'sort' in defaultColumns
