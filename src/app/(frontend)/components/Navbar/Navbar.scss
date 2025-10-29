@@ -10,7 +10,54 @@
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: rgba(0, 0, 0, 0.8); /* Darker than video opacity */
-    transition: background-color 0.6s ease, color 0.6s ease, transform 0.3s ease; /* Add transform to transition */
+    transition: background-color 0.6s ease, color 0.6s ease, transform 0.3s ease, opacity 0.25s ease, visibility 0.25s ease; /* Add transform to transition */
+
+    /* Hidden state: use opacity/visibility so children can still receive focus if needed. */
+    &.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px); /* small lift when hidden */
+
+      /* keep logo interactive when nav is hidden */
+      .logo-link,
+      .logo {
+        pointer-events: auto;
+        z-index: 1002;
+        position: relative;
+      }
+    }
+
+    /* Keep the menu trigger focusable when nav is hidden so keyboard users can Tab to it */
+    &.hidden .navTrigger {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Ensure the logo link remains focusable and shows a visible outline when focused */
+    .logo-link,
+    .logo a {
+      display: inline-block;
+    }
+
+    .logo-link:focus,
+    .logo-link:focus-visible,
+    .logo a:focus,
+    .logo a:focus-visible {
+      outline: 3px solid $primary-color;
+      outline-offset: 3px;
+      box-shadow: 0 0 0 4px rgba(0,230,118,0.12);
+      border-radius: 4px;
+    }
+
+    /* If a child receives focus, show the nav so keyboard users can see it */
+    &:focus-within,
+    &.visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: none;
+    }
 
     &.scrolled {
       background-color: $background-dark; /* Black when scrolled */
@@ -18,10 +65,6 @@
       .navlinks li a {
         color: $text-light; /* Change text color to white when scrolled */
       }
-    }
-
-    &.hidden {
-      transform: translateY(-100%); /* Move navbar up to hide */
     }
 
     .container {
@@ -39,7 +82,21 @@
         width: 100px; /* Reverted width for the logo */
         vertical-align: middle;
         background-size: contain;
+        position: relative;
+        top: 5px;
       }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      } 
   
       &:hover {
         color: $primary-color;
@@ -49,12 +106,12 @@
     .main_list {
       display: flex;
       list-style: none;
-  
+
       ul {
         display: flex;
         margin: 0;
         padding: 0;
-  
+
         li {
           margin-right: 2rem;
           list-style: none;
@@ -63,19 +120,32 @@
             color: $text-light; /* Changed to white */
             font-size: 1.6rem;
             font-weight: bold; /* Added bold font-weight */
-  
+            display: inline-block; /* improve focus area */
+            padding: 2px 4px;
+
             &:hover {
               color: $primary-color;
+            }
+
+            &:focus {
+              outline: 3px solid $primary-color;
+              outline-offset: 2px;
+              box-shadow: 0 0 0 4px rgba(0,230,118,0.12);
             }
           }
         }
       }
     }
   
+    /* Style the menu trigger as a keyboard-accessible button */
     .navTrigger {
       display: none;
       cursor: pointer;
-  
+      background: transparent;
+      border: none;
+      padding: 6px;
+      margin-left: 8px;
+
       i {
         background-color: $text-light;
         border-radius: 2px;
@@ -86,41 +156,96 @@
         margin: 5px 0;
         transition: all 0.4s ease;
       }
+
+      &:focus {
+        outline: 3px solid $primary-color;
+        outline-offset: 3px;
+        box-shadow: 0 0 0 4px rgba(0,230,118,0.12);
+      }
     }
-  
-    /* Mobile Styles */
-    @media screen and (max-width: 768px) {
-      .main_list {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 110px;
-        right: 0;
-        background-color: #111;
-        width: 100%;
-        height: calc(100vh - 100px);
-        justify-content: center;
-        align-items: center;
-  
+
+ 
+
+    @media screen and (max-width: 1400px) {
+      .main_list{
         ul {
-          flex-direction: column;
-  
           li {
-            margin: 1rem 0;
-  
+            margin-right: 1rem;
             a {
-              font-size: 2rem;
+              font-size: 1.2rem;
+            }
+          }
+        }
+      }
+      .logo{
+        a{
+          img{
+            width: 65px;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+      .container {
+        padding: 0 1rem;
+        .main_list{
+          ul {
+            li {
+              margin-right: 0.5rem;
+              a {
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+        .logo{
+          a{
+            img{
+              width: 65px;
             }
           }
         }
       }
   
-      .main_list.show_list {
-        display: flex;
-      }
-  
-      .navTrigger {
-        display: block;
+    }
+    
+    /* Mobile Styles */
+    @media screen and (max-width: 900px) {
+      .container{
+        padding: 0 0.5rem;
+        .main_list {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 81px;
+          right: 0;
+          background-color: #111;
+          width: 100%;
+          height: calc(100vh - 100px);
+          justify-content: center;
+          align-items: center;
+    
+          ul {
+            flex-direction: column;
+    
+            li {
+              margin: 1rem 0;
+    
+              a {
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+    
+        .main_list.show_list {
+          display: flex;
+        }
+    
+        .navTrigger {
+          display: block;
+        }
       }
     }
-  }
+}
