@@ -24,6 +24,17 @@ const Navbar: React.FC = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent, id: string) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        setMenuOpen(false);
+      }
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
@@ -72,24 +83,17 @@ const Navbar: React.FC = () => {
   }, []);
 
   return (
-    <nav ref={navRef} role="navigation" aria-label="Main navigation" className={`nav ${!visible ? 'hidden' : ''}`}> {/* Apply hidden class conditionally */}
+    <nav ref={navRef} role="navigation" aria-label="Main navigation" className={`nav ${!visible ? 'hidden' : ''}`}>
       <div className="container">
-        <div className="logo">
-          <a href="/" aria-label="Home - Vadim Poplavsky" title="Home" className="logo-link">
-            <Image src={logo} alt="" />
-            <span className="sr-only">Home</span>
-          </a>
-        </div>
         <div id="mainListDiv" className={`main_list ${menuOpen ? 'show_list' : ''}`}>
-          <ul className="navlinks">
-            <li><a href="#about-section" onClick={(e) => handleScrollToSection(e, 'about-section')}>About</a></li>
-            <li><a href="#services-section" onClick={(e) => handleScrollToSection(e, 'services-section')}>Services</a></li>
-            <li><a href="#work-with-section" onClick={(e) => handleScrollToSection(e, 'work-with-section')}>work with</a></li>
-            <li><a href="#reviews-section" onClick={(e) => handleScrollToSection(e, 'reviews-section')}>Recommendations</a></li>
-            {/* <li><a href="#portfolio" onClick={(e) => handleScrollToSection(e, 'portfolio')}>Portfolio</a></li> */}
-            <li><a href="#gallery-section" onClick={(e) => handleScrollToSection(e, 'gallery-section')}>Gallery</a></li>
-            <li><a href="#instagram-feed-section" onClick={(e) => handleScrollToSection(e, 'instagram-feed-section')}>Videos</a></li>
-            <li><a href="#contact-section" onClick={(e) => handleScrollToSection(e, 'contact-section')}>Contact</a></li>
+          <ul className="navlinks" role="menubar">
+            <li><a href="#about-section" tabIndex={0} role="menuitem" onClick={(e) => handleScrollToSection(e, 'about-section')} onKeyDown={(e) => handleKeyDown(e, 'about-section')}>אודות</a></li>
+            <li><a href="#services-section" tabIndex={0} role="menuitem" onClick={(e) => handleScrollToSection(e, 'services-section')} onKeyDown={(e) => handleKeyDown(e, 'services-section')}>שירותים</a></li>
+            <li><a href="#work-with-section" tabIndex={0} role="menuitem" onClick={(e) => handleScrollToSection(e, 'work-with-section')} onKeyDown={(e) => handleKeyDown(e, 'work-with-section')}>עבודה משותפת</a></li>
+            <li><a href="#reviews-section" tabIndex={0} role="menuitem" onClick={(e) => handleScrollToSection(e, 'reviews-section')} onKeyDown={(e) => handleKeyDown(e, 'reviews-section')}>המלצות</a></li>
+            <li><a href="#gallery-section" tabIndex={0} role="menuitem" onClick={(e) => handleScrollToSection(e, 'gallery-section')} onKeyDown={(e) => handleKeyDown(e, 'gallery-section')}>גלריה</a></li>
+            <li><a href="#instagram-feed-section" tabIndex={0} role="menuitem" onClick={(e) => handleScrollToSection(e, 'instagram-feed-section')} onKeyDown={(e) => handleKeyDown(e, 'instagram-feed-section')}>סרטונים</a></li>
+            <li><a href="#contact-section" tabIndex={0} role="menuitem" onClick={(e) => handleScrollToSection(e, 'contact-section')} onKeyDown={(e) => handleKeyDown(e, 'contact-section')}>יצירת קשר</a></li>
           </ul>
         </div>
         <button
@@ -104,11 +108,17 @@ const Navbar: React.FC = () => {
               toggleMenu();
             }
           }}
-        >
+          >
           <i aria-hidden="true"></i>
           <i aria-hidden="true"></i>
           <i aria-hidden="true"></i>
         </button>
+        <div className="logo">
+          <a href="/" aria-label="דף הבית - ואדים פופלבסקי" title="דף הבית" className="logo-link">
+            <Image src={logo} alt="" />
+            <span className="sr-only">דף הבית</span>
+          </a>
+        </div>
       </div>
     </nav>
   );
