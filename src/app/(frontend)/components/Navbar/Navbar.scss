@@ -122,7 +122,7 @@
             font-size: 1.6rem;
             font-weight: bold; /* Added bold font-weight */
             display: inline-block; /* improve focus area */
-            padding: 2px 4px;
+            padding: 0 4px;
 
             &:hover {
               color: $primary-color;

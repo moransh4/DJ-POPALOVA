@@ -63,16 +63,26 @@ const Hero = () => {
       </video>
       <div className="hero-title-container">
         <h1>DJ POPALOVA</h1>
-        <div className="scroll-down-arrow" onClick={scrollToNextSection}>
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="red" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <button
+          type="button"
+          className="scroll-down-arrow"
+          onClick={scrollToNextSection}
+          aria-label="גלול למקטע הבא"
+        >
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="red" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M12 5v14M19 12l-7 7-7-7"/>
           </svg>
-        </div>
+        </button>
       </div>
       <div className="hero-controls-container">
         {/* <h1>Welcome to Vadim's Music Site</h1>
         <p>Experience the captivating sounds</p> */}
-        <button onClick={handlePlayPause} className="video-control-button">
+        <button
+          onClick={handlePlayPause}
+          className="video-control-button"
+          aria-label={isPlaying ? 'Pause video' : 'Play video'}
+          aria-pressed={isPlaying}
+        >
           {isPlaying ? (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="6" y1="4" x2="6" y2="20"></line>
@@ -84,7 +94,12 @@ const Hero = () => {
             </svg>
           )}
         </button>
-        <button onClick={handleToggleMute} className="video-control-button mute-button">
+        <button
+          onClick={handleToggleMute}
+          className="video-control-button mute-button"
+          aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+          aria-pressed={isMuted}
+        >
           {isMuted ? (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
