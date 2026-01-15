@@ -11,6 +11,9 @@ const Contact = () => {
     message: '',
   });
 
+  const whatsappMessage = 'היי, הגעתי אליך מהאתר.';
+  const whatsappLink = `https://wa.me/972544432984?text=${encodeURIComponent(whatsappMessage)}`;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
@@ -63,7 +66,7 @@ const Contact = () => {
             {/* <a href="https://www.linkedin.com/in/vadim-poplavsky" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </a> */}
-            <a href="https://wa.me/972544432984" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="WhatsApp">
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="WhatsApp">
               <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12.04 2C6.55 2 2.04 6.51 2.04 12c0 1.99.52 3.93 1.51 5.64L2 22l4.49-1.48c1.63.89 3.47 1.36 5.55 1.36 5.49 0 9.96-4.51 9.96-10S17.53 2 12.04 2zm0 18.4c-1.73 0-3.34-.45-4.75-1.3l-.34-.2-2.66.88.89-2.59-.22-.34c-.95-1.45-1.45-3.13-1.45-4.85 0-4.73 3.85-8.58 8.58-8.58 4.73 0 8.58 3.85 8.58 8.58 0 4.73-3.85 8.58-8.58 8.58zm4.7-6.57c-.26-.13-1.53-.76-1.77-.85-.24-.09-.42-.13-.6.13-.18.26-.69.85-.85 1.03-.16.18-.31.2-.57.07-.26-.13-1.09-.4-2.07-1.28-.76-.68-1.27-1.52-1.42-1.78-.15-.26-.02-.4.11-.53.11-.11.26-.29.38-.44.13-.15.17-.26.26-.43.09-.18.04-.33-.02-.46-.07-.13-.6-1.45-.82-1.99-.22-.53-.44-.46-.6-.47h-.52c-.18 0-.46.07-.7.33-.24.26-.93.91-.93 2.22s.95 2.57 1.08 2.75c.13.18 1.87 2.86 4.54 4.01.64.28 1.14.45 1.53.58.64.2 1.22.17 1.68.1.51-.08 1.53-.63 1.75-1.24.22-.6.22-1.11.15-1.24-.07-.13-.24-.2-.5-.33z"/>
               </svg>

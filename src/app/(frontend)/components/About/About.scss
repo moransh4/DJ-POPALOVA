@@ -53,6 +53,9 @@
         line-height: 1.4;
         margin-bottom: 0.6rem;
         color: $text-light; /* Changed paragraph text color to light */
+        @media (max-width: 1000px) {
+          font-size: 0.9rem;
+        }
         @media (max-width: 768px) {
           font-size: 0.9rem;
         }

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import './Footer.scss';
 
 const Footer = () => {
@@ -31,6 +32,7 @@ const Footer = () => {
       <button onClick={scrollToTop} className="button-up"></button>
     )}
     <p>Developed by Moran Sharabi</p>
+    <Link href="/accessibility" className="accessibility-link" aria-label="הצהרת נגישות">הצהרת נגישות</Link>
   </div>
   );
 };
