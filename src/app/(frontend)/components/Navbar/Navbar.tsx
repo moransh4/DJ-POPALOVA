@@ -21,6 +21,25 @@ const Navbar: React.FC = () => {
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
       setMenuOpen(false); // Close mobile menu after clicking a link
+
+      // After smooth scroll, move focus into the section for keyboard users
+      // Use a small timeout to allow the smooth scroll to start/complete
+      setTimeout(() => {
+        try {
+          // Prefer a heading inside the section (h1/h2/...)
+          const heading = section.querySelector('h1, h2, h3, h4, h5, h6') as HTMLElement | null;
+          if (heading) {
+            heading.setAttribute('tabindex', '-1');
+            heading.focus();
+          } else {
+            // Fallback: focus the section itself
+            section.setAttribute('tabindex', '-1');
+            (section as HTMLElement).focus();
+          }
+        } catch (err) {
+          // ignore
+        }
+      }, 400);
     }
   };
 

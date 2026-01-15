@@ -111,4 +111,11 @@
         overflow-y: visible;
       }
     }
-  }
+}
+
+/* Highlight the about content when focused via keyboard/tab or when any child gets focus */
+p:focus,
+p:focus-visible
+ {
+  outline: 3px solid $primary-color;
+}
