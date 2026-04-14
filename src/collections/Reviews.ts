@@ -4,9 +4,19 @@ import type { CollectionConfig } from 'payload'
   slug: 'reviews',
   admin: {
     useAsTitle: 'reviewerName', // Fixed typo here
+    defaultColumns: ['reviewerName', 'rating', 'date', 'approved'],
   },
   access: {
-    read: () => true, // Allow public read access
+    read: ({ req }) => {
+      if (req.user) return true
+
+      return {
+        approved: {
+          equals: true,
+        },
+      }
+    },
+    create: () => true,
   },
   fields: [
     {
@@ -49,6 +59,15 @@ import type { CollectionConfig } from 'payload'
       type: 'upload',
       relationTo: 'media', // Assuming you have a 'media' collection for uploads
     },
+    {
+      name: 'approved',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
+  defaultSort: 'approved',
 };
 

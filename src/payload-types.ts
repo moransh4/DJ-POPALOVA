@@ -149,7 +149,7 @@ export interface User {
  */
 export interface Media {
   id: string;
-  alt: string;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -174,6 +174,7 @@ export interface Review {
   date: string;
   rating: number;
   reviewerPicture?: (string | null) | Media;
+  approved?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -328,6 +329,7 @@ export interface ReviewsSelect<T extends boolean = true> {
   date?: T;
   rating?: T;
   reviewerPicture?: T;
+  approved?: T;
   updatedAt?: T;
   createdAt?: T;
 }

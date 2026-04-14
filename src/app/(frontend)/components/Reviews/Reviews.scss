@@ -230,6 +230,203 @@
       }
     }
 
+    .reviews-feedback {
+      margin-top: 1rem;
+      font-size: 1rem;
+      color: $text-light;
+    }
+
+    .reviews-actions {
+      margin-top: 1.5rem;
+    }
+
+    .open-review-modal-button {
+      border: 2px solid $text-light;
+      background: $secondary-color;
+      color: $text-light;
+      padding: 0.8rem 1.2rem;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        background-color: lighten($secondary-color, 8%);
+      }
+
+      &:focus-visible {
+        outline: 3px solid $text-light;
+        outline-offset: 3px;
+      }
+    }
+
+    .review-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+      padding: 1rem;
+    }
+
+    .review-modal {
+      width: min(100%, 560px);
+      background: $secondary-color;
+      color: $text-light;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      padding: 1.25rem 1.25rem 1rem;
+      position: relative;
+      text-align: right;
+
+      h3 {
+        margin: 0 0 0.8rem;
+        font-size: 1.3rem;
+        color: $primary-color;
+      }
+    }
+
+    .review-modal-close {
+      position: absolute;
+      top: 0.6rem;
+      left: 0.6rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 0;
+      background: transparent;
+      color: $text-light;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 3px solid $text-light;
+        outline-offset: 2px;
+      }
+    }
+
+    .review-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+
+      label {
+        font-size: 0.95rem;
+        color: $text-light;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border: 1px solid #666;
+        border-radius: 8px;
+        background: #303030;
+        color: $text-light;
+        padding: 0.6rem 0.7rem;
+        font-size: 0.95rem;
+      }
+
+      input[type='file'] {
+        padding: 0.45rem;
+      }
+
+      textarea {
+        resize: vertical;
+      }
+
+      input:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible {
+        outline: 3px solid $primary-color;
+        outline-offset: 2px;
+        border-color: $primary-color;
+      }
+
+      .interactive-rating {
+        display: flex;
+        justify-content: flex-start;
+        gap: 0.35rem;
+        margin-top: 0.1rem;
+      }
+
+      .rating-star-button {
+        border: 0;
+        background: transparent;
+        color: $star-empty;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.15s ease, color 0.2s ease;
+
+        svg {
+          width: 28px;
+          height: 28px;
+          fill: currentColor;
+        }
+
+        &.filled {
+          color: $star-filled;
+        }
+
+        &:hover {
+          transform: translateY(-2px) scale(1.08);
+        }
+
+        &:focus-visible {
+          outline: 3px solid $primary-color;
+          outline-offset: 2px;
+          border-radius: 6px;
+        }
+      }
+
+      .rating-value {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #d6d6d6;
+      }
+    }
+
+    .submit-review-button {
+      margin-top: 0.5rem;
+      border: 0;
+      border-radius: 8px;
+      background: $primary-color;
+      color: $text-light;
+      font-weight: 700;
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: wait;
+      }
+
+      &:focus-visible {
+        outline: 3px solid $text-light;
+        outline-offset: 2px;
+      }
+    }
+
+    .review-form-success {
+      margin: 0.4rem 0 0;
+      color: #b4f8b6;
+    }
+
+    .review-form-error {
+      margin: 0.4rem 0 0;
+      color: #ffb0b0;
+    }
+
     @media (max-width: 768px) {
       padding: 60px 10px;
 
@@ -241,6 +438,14 @@
       .swiper {
         padding-bottom: 40px;
         /* Removed justify-content: center from swiper-slide here as well */
+      }
+
+      .review-modal {
+        padding: 1rem;
+
+        h3 {
+          font-size: 1.1rem;
+        }
       }
 
       .swiper-slide {
