@@ -9,6 +9,5 @@ export const metadata = {
 export default async function FrontendLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
-  // Nested layout must not render <html> or <body> — those are provided by the root layout
-  return <>{children}</>
+  return <main>{children}</main>
 }

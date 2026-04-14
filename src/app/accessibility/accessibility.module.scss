@@ -3,7 +3,6 @@
 /* Page container: white background and dark text to match your request */
 .container {
   max-width: 900px;
-  height: 100vh; /* full viewport height minus margins */
   margin: 0rem auto; /* reduced outer margins */
   padding: 0.6rem; /* reduced padding */
   background: #ffffff; /* white background */
@@ -91,6 +90,10 @@
   margin: 0;
   color: $text-dark;
   font-size: 0.95rem;
+}
+
+.contactLabel {
+  font-weight: bolder;
 }
 
 .updated {

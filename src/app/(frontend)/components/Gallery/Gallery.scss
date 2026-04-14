@@ -26,7 +26,10 @@
     gap: 0px; /* Removed gap between images */
     max-width: 1400px; /* Max width for the grid */
     width: 100%;
+    list-style: none;
+    padding: 0;
     margin-top: 30px;
+    margin-bottom: 0;
     /* Reverted grid-auto-rows and grid-auto-flow: dense */
   }
 
@@ -58,6 +61,11 @@
       .gallery-image {
         transform: scale(1.1); /* Image resize effect on hover */
       }
+    }
+
+    &:focus-within {
+      outline: 4px solid $primary-color;
+      outline-offset: 2px;
     }
 
     .gallery-image {

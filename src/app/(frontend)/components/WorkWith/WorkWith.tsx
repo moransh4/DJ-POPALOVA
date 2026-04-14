@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import type { Swiper as SwiperInstance } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Keyboard, A11y } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -24,7 +25,7 @@ const WorkWith = () => {
   const [workWithItems, setWorkWithItems] = useState<WorkWithItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const swiperRef = useRef<any>(null); // Use useRef to get Swiper instance
+  const swiperRef = useRef<SwiperInstance | null>(null);
 
   useEffect(() => {
     const fetchWorkWith = async () => {
@@ -35,8 +36,8 @@ const WorkWith = () => {
         }
         const data = await response.json();
         setWorkWithItems(data.docs);
-      } catch (err: any) {
-        setError(err.message || 'Failed to fetch "Work With" items');
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch "Work With" items');
       } finally {
         setLoading(false);
         // Update Swiper after data is loaded and component has rendered
@@ -50,33 +51,60 @@ const WorkWith = () => {
   }, []);
 
   if (loading) {
-    return <section className="work-with-section"><p>Loading famous people...</p></section>;
+    return (
+      <section className="work-with-section" role="status" aria-live="polite" lang="he" dir="rtl">
+        <p>טוען אומנים...</p>
+      </section>
+    );
   }
 
   if (error) {
-    return <section className="work-with-section"><p style={{ color: 'red' }}>Error: {error}</p></section>;
+    return (
+      <section className="work-with-section" role="alert" lang="he" dir="rtl">
+        <p style={{ color: 'red' }}>שגיאה: {error}</p>
+      </section>
+    );
   }
 
   if (workWithItems.length === 0) {
-    return <section className="work-with-section"><p>No famous people found.</p></section>;
+    return (
+      <section className="work-with-section" role="status" aria-live="polite" lang="he" dir="rtl">
+        <p>לא נמצאו אומנים.</p>
+      </section>
+    );
   }
 
   return (
-    <section id="work-with-section">
-      <h2 className="work-with-title">אומנים שעבדתי איתם</h2>
+    <section id="work-with-section" role="region" aria-labelledby="work-with-heading" lang="he" dir="rtl">
+      <h2 id="work-with-heading" className="work-with-title">אומנים שעבדתי איתם</h2>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)} // Get Swiper instance
-        modules={[Navigation]} // Add Navigation module back
+        modules={[Navigation, Keyboard, A11y]}
         spaceBetween={30}
         slidesPerView={'auto'}
-        navigation // Add navigation prop back
-        loop={false} // Set loop to false
-        observer={true} // Observe changes on Swiper itself
-        observeParents={true} // Observe changes on parent elements
+        navigation
+        keyboard={{
+          enabled: true,
+          onlyInViewport: true,
+        }}
+        a11y={{
+          enabled: true,
+          prevSlideMessage: 'האומן הקודם',
+          nextSlideMessage: 'האומן הבא',
+          firstSlideMessage: 'זוהי השקופית הראשונה',
+          lastSlideMessage: 'זוהי השקופית האחרונה',
+          containerMessage: 'קרוסלת אומנים שעבדתי איתם',
+          containerRoleDescriptionMessage: 'קרוסלה',
+          itemRoleDescriptionMessage: 'שקופית',
+        }}
+        loop={false}
+        observer={true}
+        observeParents={true}
         centeredSlides={true}
         centeredSlidesBounds={true}
-        freeMode={true} // Add freeMode for smoother, non-snapping scrolling
+        freeMode={true}
         className="mySwiper"
+        aria-label="קרוסלת אומנים שעבדתי איתם"
         breakpoints={{
           640: {
             slidesPerView: 'auto',
@@ -93,8 +121,8 @@ const WorkWith = () => {
         }}
       >
         {workWithItems.map((item) => (
-          <SwiperSlide key={item.id}>
-            <div className="work-with-card">
+          <SwiperSlide key={item.id} aria-label={item.name}>
+            <article className="work-with-card" tabIndex={0} aria-label={`אומן: ${item.name}`}>
               <h3>{item.name}</h3>
               {item.image && item.image.url && (
                 <Image
@@ -105,7 +133,7 @@ const WorkWith = () => {
                   className="work-with-image"
                 />
               )}
-            </div>
+            </article>
           </SwiperSlide>
         ))}
       </Swiper>

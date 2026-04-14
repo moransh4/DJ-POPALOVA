@@ -1,36 +1,37 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect } from 'react'; // Import useState and useEffect
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation, Autoplay } from 'swiper/modules';
-import Image from 'next/image'; // Import Image component
+import React, { useState, useEffect } from 'react' // Import useState and useEffect
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination, Navigation, Autoplay, Keyboard, A11y } from 'swiper/modules'
+import Image from 'next/image' // Import Image component
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 
-import './Reviews.scss';
+import './Reviews.scss'
 
 // Define the type for a review item (optional but good practice)
 interface Review {
-  id: string;
-  reviewerName: string;
+  id: string
+  reviewerName: string
   reviewAvatar?: {
-    id: string;
-    url: string;
-  };
-  reviewText: string;
-  date: string;
-  rating: number;
-  reviewerPicture?: { // Payload upload type often includes id and url
-    id: string;
-    url: string;
-  };
+    id: string
+    url: string
+  }
+  reviewText: string
+  date: string
+  rating: number
+  reviewerPicture?: {
+    // Payload upload type often includes id and url
+    id: string
+    url: string
+  }
 }
 
 const StarRating = ({ rating }: { rating: number }) => {
-  const stars = [];
+  const stars = []
   for (let i = 0; i < 5; i++) {
     stars.push(
       <svg
@@ -38,60 +39,107 @@ const StarRating = ({ rating }: { rating: number }) => {
         className={`star ${i < rating ? 'filled' : ''}`}
         fill="currentColor"
         viewBox="0 0 20 20"
+        aria-hidden="true"
+        focusable="false"
       >
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
-      </svg>
-    );
+      </svg>,
+    )
   }
-  return <div className="star-rating">{stars}</div>;
-};
+  return (
+    <div className="star-rating" role="img" aria-label={`דירוג ${rating} מתוך 5 כוכבים`}>
+      {stars}
+    </div>
+  )
+}
+
+const formatReviewDate = (date: string) =>
+  new Date(date).toLocaleDateString('he-IL', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
 
 const Reviews = () => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         // Assuming Payload API is accessible at /api/reviews
-        const response = await fetch('/api/reviews');
+        const response = await fetch('/api/reviews')
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`)
         }
-        const data = await response.json();
+        const data = await response.json()
         // Payload returns data in a 'docs' array
-        setReviews(data.docs);
-      } catch (err: any) {
-        setError(err.message || 'Failed to fetch reviews');
+        setReviews(data.docs)
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch reviews')
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchReviews();
-  }, []);
+    fetchReviews()
+  }, [])
 
   if (loading) {
-    return <section className="reviews-section"><p>Loading reviews...</p></section>;
+    return (
+      <section className="reviews-section" role="status" aria-live="polite" lang="he" dir="rtl">
+        <p>טוען חוות דעת...</p>
+      </section>
+    )
   }
 
   if (error) {
-    return <section className="reviews-section"><p style={{ color: 'red' }}>Error: {error}</p></section>;
+    return (
+      <section className="reviews-section" role="alert" lang="he" dir="rtl">
+        <p style={{ color: 'red' }}>שגיאה: {error}</p>
+      </section>
+    )
   }
 
   if (reviews.length === 0) {
-    return <section className="reviews-section"><p>No reviews found.</p></section>;
+    return (
+      <section className="reviews-section" role="status" aria-live="polite" lang="he" dir="rtl">
+        <p>לא נמצאו חוות דעת.</p>
+      </section>
+    )
   }
 
   return (
-    <section id="reviews-section">
-      <h2 className="reviews-title">חוות דעת מלקוחות</h2>
+    <section
+      id="reviews-section"
+      role="region"
+      aria-labelledby="reviews-heading"
+      lang="he"
+      dir="rtl"
+    >
+      <h2 id="reviews-heading" className="reviews-title">
+        חוות דעת מלקוחות
+      </h2>
       <Swiper
-        modules={[Pagination, Navigation, Autoplay]}
+        modules={[Pagination, Navigation, Autoplay, Keyboard, A11y]}
         spaceBetween={50}
         slidesPerView={1} /* Default for smallest screens */
         navigation
+        keyboard={{
+          enabled: true,
+          onlyInViewport: true,
+        }}
+        a11y={{
+          enabled: true,
+          prevSlideMessage: 'חוות הדעת הקודמת',
+          nextSlideMessage: 'חוות הדעת הבאה',
+          firstSlideMessage: 'זוהי חוות הדעת הראשונה',
+          lastSlideMessage: 'זוהי חוות הדעת האחרונה',
+          containerMessage: 'קרוסלת חוות דעת מלקוחות',
+          containerRoleDescriptionMessage: 'קרוסלה',
+          itemRoleDescriptionMessage: 'שקופית',
+        }}
         // pagination={{ clickable: true }}
         // autoplay={{ // Autoplay commented out by user
         //   delay: 5000,
@@ -101,6 +149,7 @@ const Reviews = () => {
         centeredSlides={true} /* Center slides when there are fewer than slidesPerView */
         centeredSlidesBounds={true} /* Ensure active slide is always centered */
         className="mySwiper"
+        aria-label="קרוסלת חוות דעת מלקוחות"
         breakpoints={{
           640: {
             slidesPerView: 1,
@@ -111,36 +160,46 @@ const Reviews = () => {
             spaceBetween: 30,
           },
           1024: {
-            slidesPerView: 'auto', /* Changed to auto to allow CSS to control slide width */
+            slidesPerView: 'auto' /* Changed to auto to allow CSS to control slide width */,
             spaceBetween: 40,
           },
         }}
       >
         {reviews.map((review) => (
-          <SwiperSlide key={review.id}>
-            <div className="review-card">
+          <SwiperSlide key={review.id} aria-label={`חוות דעת של ${review.reviewerName}`}>
+            <div
+              className="review-card"
+              tabIndex={0}
+              role="group"
+              aria-label={`חוות דעת של ${review.reviewerName}, דירוג ${review.rating} מתוך 5, מתאריך ${formatReviewDate(review.date)}`}
+            >
               {review.reviewerPicture && review.reviewerPicture.url ? (
-                <Image
-                  src={review.reviewerPicture.url}
-                  alt={review.reviewerName}
-                  fill
-                  className="reviewer-picture-full"
-                />
+                <>
+                  <Image
+                    src={review.reviewerPicture.url}
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    className="reviewer-picture-full"
+                  />
+                  <span className="sr-only">חוות דעת של {review.reviewerName}</span>
+                </>
               ) : (
                 <>
                   {review.reviewAvatar && review.reviewAvatar.url && (
                     <Image
                       src={review.reviewAvatar.url}
-                      alt={review.reviewerName}
+                      alt=""
+                      aria-hidden="true"
                       width={80}
                       height={80}
                       className="reviewer-avatar"
                     />
                   )}
                   <StarRating rating={review.rating} />
-                  <p className="review-text">"{review.reviewText}"</p>
+                  <p className="review-text">&quot;{review.reviewText}&quot;</p>
                   <p className="client-name">{review.reviewerName}</p>
-                  <p className="review-date">{new Date(review.date).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+                  <p className="review-date">{formatReviewDate(review.date)}</p>
                 </>
               )}
             </div>
@@ -148,7 +207,7 @@ const Reviews = () => {
         ))}
       </Swiper>
     </section>
-  );
-};
+  )
+}
 
-export default Reviews;
+export default Reviews

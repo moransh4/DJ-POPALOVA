@@ -34,6 +34,7 @@
 
     .review-card {
       background-color: $secondary-color; /* Darker background for cards */
+      border: 2px solid transparent;
       border-radius: 15px;
       padding: 25px; /* Reduced padding */
       height: 600px; /* Set a fixed height for consistency */
@@ -45,8 +46,20 @@
       align-items: center;
       text-align: center;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow */
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.25s ease, background-color 0.25s ease;
       width: 100%; /* Ensure cards don't take full width on large screens */
+      outline: none;
+
+      &:focus-visible {
+        // border-color: $text-dark;
+        outline: 4px solid rgba(255, 255, 255, 0.95);
+        outline-offset: 5px;
+        transform: translateY(-10px) scale(1.03);
+        box-shadow:
+          0 0 0 10px rgba(0, 0, 0, 0.2),
+          0 18px 40px rgba(0, 0, 0, 0.45);
+        background-color: lighten($secondary-color, 6%);
+      }
 
       &:hover {
         transform: translateY(-15px) scale(1.02); /* More pronounced lift and slight scale */
@@ -116,13 +129,21 @@
     /* Swiper Navigation and Pagination Overrides */
     .swiper-button-next,
     .swiper-button-prev {
-      color: $primary-color; /* Accent color for navigation arrows */
+      color: $text-light; /* Accent color for navigation arrows */
       top: 50%; /* Center vertically */
       transform: translateY(-50%);
-      font-size: 2rem;
+      font-size: 3rem;
+      outline: none;
 
       &::after {
-        font-size: 2rem; /* Ensure consistent icon size */
+        font-size: 3rem; /* Ensure consistent icon size */
+      }
+
+      &:focus-visible {
+        outline: 4px solid $text-dark;
+        outline-offset: 6px;
+        border-radius: 999px;
+        box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.35);
       }
     }
 
@@ -171,6 +192,10 @@
           transform: none; /* Disable hover transform on mobile */
           box-shadow: none; /* Disable hover box-shadow on mobile */
         }
+
+        &:focus-visible {
+          transform: translateY(-4px) scale(1.02);
+        }
       }
 
       .swiper-button-next,
@@ -187,3 +212,15 @@
       }
     }
   }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
