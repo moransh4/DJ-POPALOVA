@@ -24,17 +24,15 @@
       display: block;
       flex: 0 0 50%;
       max-width: 50%;
-      /* order: -1; */ /* Removed order property */
-      height: auto;
-      min-height: 100%;
-      align-self: stretch;
-      position: relative;
-      top: auto;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      align-self: flex-start;
       overflow: hidden;
       background-image: url('./images/about.jpg');
       background-size: cover;
       background-position: center center;
-      background-attachment: fixed;
+      background-attachment: scroll;
       background-repeat: no-repeat;
       border-radius: 0;
       box-shadow: none;
@@ -44,11 +42,14 @@
     .about-content {
       flex: 0 0 50%;
       max-width: 50%;
-      text-align: center; /* Changed to center align text */
+      text-align: center;
       padding: 30px;
       overflow-y: auto;
       font-weight: bold;
       direction: rtl;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       
       p {
         font-size: 1rem;
