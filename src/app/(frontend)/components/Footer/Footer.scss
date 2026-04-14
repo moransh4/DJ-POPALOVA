@@ -3,6 +3,7 @@
 .footer {
     display: flex;
     align-items: center;
+  justify-content: space-between;
     vertical-align: center;
     gap: 8px;
     font-size: 0.8rem;
@@ -14,20 +15,25 @@
 
     .button-up {
       position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        background-image: url('../../../../../public/arrow-up.png');
-        background-size: cover;
-        z-index: 100;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      background-image: url('../../../../../public/arrow-up.png');
+      background-size: cover;
+      z-index: 100;
+
+      &:focus-visible {
+        outline: 3px solid white;
+        outline-offset: 3px;
       }
+    }
 
 
     p {
@@ -42,14 +48,19 @@
     }
 
     .accessibility-link {
-      margin-left: auto; /* push link to the right */
-      color: $text-light; /* white link color */
+      color: $text-light;
       text-decoration: underline;
+      text-underline-offset: 3px;
       font-weight: 600;
 
-      &:focus {
-        outline: 3px solid rgba(255,255,255,0.25);
-        outline-offset: 2px;
+      &:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      &:focus-visible {
+        outline: 3px solid white;
+        outline-offset: 3px;
+        border-radius: 2px;
       }
     }
   }

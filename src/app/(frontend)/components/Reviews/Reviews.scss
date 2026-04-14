@@ -35,8 +35,8 @@
     .review-card {
       background-color: $secondary-color; /* Darker background for cards */
       border: 2px solid transparent;
-      border-radius: 15px;
-      padding: 25px; /* Reduced padding */
+      border-radius: 24px;
+      padding: 0;
       height: 600px; /* Set a fixed height for consistency */
       position: relative; /* Add position relative for absolute children */
       overflow: hidden; /* Hide overflow for images that might exceed bounds */
@@ -45,10 +45,24 @@
       justify-content: space-between;
       align-items: center;
       text-align: center;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+      box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.28),
+        0 4px 14px rgba(0, 0, 0, 0.18); /* Stronger shadow */
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.25s ease, background-color 0.25s ease;
       width: 100%; /* Ensure cards don't take full width on large screens */
       outline: none;
+
+      &--photo {
+        padding: 0;
+        background-color: darken($secondary-color, 2%);
+      }
+
+      &--text {
+        justify-content: center;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
+          $secondary-color;
+      }
 
       &:focus-visible {
         // border-color: $text-dark;
@@ -68,31 +82,71 @@
           0 12px 35px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6); /* Bottom glow */
       }
 
+      .review-card-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        padding: 34px 28px 30px;
+        background:
+          radial-gradient(circle at top right, rgba(red($primary-color), green($primary-color), blue($primary-color), 0.18), transparent 32%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+      }
+
+      .review-card-accent {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(red($primary-color), green($primary-color), blue($primary-color), 0.3), transparent 70%);
+        pointer-events: none;
+      }
+
+      .review-quote-mark {
+        font-size: 4.5rem;
+        line-height: 0.8;
+        margin: 0 0 0.25rem;
+        color: rgba(red($primary-color), green($primary-color), blue($primary-color), 0.9);
+        align-self: flex-start;
+      }
+
       .review-text {
         font-size: 1rem; /* Reduced font size */
-        line-height: 1.6;
-        margin-bottom: 1rem; /* Reduced margin */
+        line-height: 1.9;
+        margin-bottom: 1.4rem; /* Reduced margin */
         font-style: italic;
+        font-family: 'Rubik', 'Heebo', 'Segoe UI', sans-serif;
+        font-weight: 400;
+        letter-spacing: 0.01em;
         color: #f0f0f0; // Keeping this light grey for contrast, not in variables
+        max-width: none;
+        text-align: right;
       }
 
       .client-name {
         font-size: 1.1rem; /* Reduced font size */
         font-weight: bold;
         color: $primary-color; /* Accent color for client name */
-        margin-bottom: 0.3rem; /* Reduced margin */
+        margin: 0;
       }
 
       .review-date {
         font-size: 0.8rem; /* Reduced font size */
         color: #ccc; // Keeping this light grey for contrast, not in variables
+        margin: 0;
       }
 
       .reviewer-avatar {
         border-radius: 50%;
         object-fit: cover;
-        margin-bottom: 1rem;
         border: 3px solid $primary-color; /* Accent border for the avatar */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        flex-shrink: 0;
       }
 
       .reviewer-picture {
@@ -105,14 +159,33 @@
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: fill;
-        border-radius: 15px; /* Match card border-radius */
+        object-fit: cover;
+        border-radius: 24px; /* Match card border-radius */
+      }
+
+      .review-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: auto;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .review-footer-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: right;
+        flex: 1;
       }
 
       .star-rating {
         display: flex;
         gap: 0.2rem;
         margin-bottom: 1rem;
+        justify-content: flex-start;
 
         .star {
           width: 20px;
@@ -175,13 +248,34 @@
       }
 
       .review-card {
-        padding: 20px 15px; /* Adjusted padding for mobile */
+        padding: 0;
         // height: 220px; /* Adjusted height for mobile */
         /* Removed max-width for mobile, letting swiper-slide width control */
 
+        &--photo {
+          padding: 0;
+        }
+
+        .review-card-content {
+          padding: 28px 20px 24px;
+        }
+
+        .review-quote-mark {
+          font-size: 3.5rem;
+        }
+
         .review-text {
           font-size: 0.9rem; /* Adjusted font size for mobile */
-          line-height: 1.5;
+          line-height: 1.7;
+        }
+
+        .review-footer {
+          gap: 0.75rem;
+        }
+
+        .reviewer-avatar {
+          width: 60px;
+          height: 60px;
         }
 
         .client-name {
@@ -208,7 +302,7 @@
       }
 
       .reviewer-picture-full {
-        border-radius: 15px; /* Ensure mobile images also have border-radius */
+        border-radius: 24px; /* Ensure mobile images also have border-radius */
       }
     }
   }

@@ -1,14 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import type { Swiper as SwiperInstance } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Keyboard, A11y } from 'swiper/modules';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
 
 import './WorkWith.scss';
 
@@ -25,7 +18,7 @@ const WorkWith = () => {
   const [workWithItems, setWorkWithItems] = useState<WorkWithItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const swiperRef = useRef<SwiperInstance | null>(null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWorkWith = async () => {
@@ -40,10 +33,6 @@ const WorkWith = () => {
         setError(err instanceof Error ? err.message : 'Failed to fetch "Work With" items');
       } finally {
         setLoading(false);
-        // Update Swiper after data is loaded and component has rendered
-        if (swiperRef.current) {
-          swiperRef.current.update();
-        }
       }
     };
 
@@ -77,66 +66,79 @@ const WorkWith = () => {
   return (
     <section id="work-with-section" role="region" aria-labelledby="work-with-heading" lang="he" dir="rtl">
       <h2 id="work-with-heading" className="work-with-title">אומנים שעבדתי איתם</h2>
-      <Swiper
-        onSwiper={(swiper) => (swiperRef.current = swiper)} // Get Swiper instance
-        modules={[Navigation, Keyboard, A11y]}
-        spaceBetween={30}
-        slidesPerView={'auto'}
-        navigation
-        keyboard={{
-          enabled: true,
-          onlyInViewport: true,
-        }}
-        a11y={{
-          enabled: true,
-          prevSlideMessage: 'האומן הקודם',
-          nextSlideMessage: 'האומן הבא',
-          firstSlideMessage: 'זוהי השקופית הראשונה',
-          lastSlideMessage: 'זוהי השקופית האחרונה',
-          containerMessage: 'קרוסלת אומנים שעבדתי איתם',
-          containerRoleDescriptionMessage: 'קרוסלה',
-          itemRoleDescriptionMessage: 'שקופית',
-        }}
-        loop={false}
-        observer={true}
-        observeParents={true}
-        centeredSlides={true}
-        centeredSlidesBounds={true}
-        freeMode={true}
-        className="mySwiper"
-        aria-label="קרוסלת אומנים שעבדתי איתם"
-        breakpoints={{
-          640: {
-            slidesPerView: 'auto',
-            spaceBetween: 20,
-          },
-          768: {
-            slidesPerView: 'auto',
-            spaceBetween: 30,
-          },
-          1024: {
-            slidesPerView: 'auto', // Allow CSS to control slide width
-            spaceBetween: 40,
-          },
-        }}
-      >
-        {workWithItems.map((item) => (
-          <SwiperSlide key={item.id} aria-label={item.name}>
-            <article className="work-with-card" tabIndex={0} aria-label={`אומן: ${item.name}`}>
-              <h3>{item.name}</h3>
-              {item.image && item.image.url && (
-                <Image
-                  src={item.image.url}
-                  alt={item.name}
-                  width={150}
-                  height={150}
-                  className="work-with-image"
-                />
-              )}
-            </article>
-          </SwiperSlide>
+      <div className="bubbles-container" aria-label="גלריית אומנים צפה">
+        {workWithItems.map((item, index) => (
+          <article
+            key={item.id}
+            className={`bubble bubble-${index % 6} ${expandedId === item.id ? 'expanded' : ''}`}
+            tabIndex={0}
+            role="button"
+            aria-label={`אומן: ${item.name}. לחץ Enter או לחץ כדי להרחיב`}
+            aria-expanded={expandedId === item.id}
+            onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setExpandedId(expandedId === item.id ? null : item.id);
+              }
+            }}
+          >
+            {item.image && item.image.url && (
+              <Image
+                src={item.image.url}
+                alt={item.name}
+                width={150}
+                height={150}
+                className="bubble-image"
+              />
+            )}
+            <h3 className="bubble-name">{item.name}</h3>
+          </article>
         ))}
-      </Swiper>
+      </div>
+
+      {/* Expanded Modal Overlay */}
+      {expandedId && (
+        <div
+          className="bubble-modal-overlay"
+          onClick={() => setExpandedId(null)}
+          role="presentation"
+          aria-label="סגור חלון מורחב"
+        >
+          <article
+            className="bubble-modal"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+          >
+            {workWithItems.map((item) => {
+              if (item.id !== expandedId) return null;
+              return (
+                <div key={item.id}>
+                  {item.image && item.image.url && (
+                    <Image
+                      src={item.image.url}
+                      alt={item.name}
+                      width={300}
+                      height={300}
+                      className="modal-image"
+                    />
+                  )}
+                  <h2 id="modal-title">{item.name}</h2>
+                  <button
+                    className="modal-close"
+                    onClick={() => setExpandedId(null)}
+                    aria-label="סגור"
+                  >
+                    ✕
+                  </button>
+                </div>
+              );
+            })}
+          </article>
+        </div>
+      )}
     </section>
   );
 };

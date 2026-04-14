@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 #work-with-section {
-  background-color: $background-dark; // Changed to background-dark for alternation
+  background-color: $background-dark;
   padding: 80px 15px;
   color: $text-light;
   text-align: center;
@@ -11,132 +11,333 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   .work-with-title {
     color: $primary-color;
+    margin-bottom: 60px;
+    font-size: 2.5rem;
+    z-index: 1;
   }
 
-  .swiper {
+  /* Floating Bubbles Container */
+  .bubbles-container {
+    position: relative;
     width: 100%;
-    padding-top: 50px;
-    padding-bottom: 50px;
-
-    .swiper-slide {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 250px; /* Match work-with-card width */
-      height: 300px; /* Match work-with-card height */
-    }
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
   }
 
-  /* Swiper Navigation Overrides */
-  .swiper-button-next,
-  .swiper-button-prev {
-    color: $primary-color; /* Accent color for navigation arrows */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    font-size: 2rem;
-    outline: none;
-
-    &::after {
-      font-size: 2rem; /* Ensure consistent icon size */
-    }
-
-    &:focus-visible {
-      outline: 4px solid $text-light;
-      outline-offset: 6px;
-      border-radius: 999px;
-      box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.28);
-    }
-  }
-
-  .work-with-card {
+  /* Base Bubble Styles */
+  .bubble {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
     background-color: $secondary-color;
-    border: 2px solid transparent;
-    border-radius: 15px;
-    padding: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.25s ease, background-color 0.25s ease;
-    width: 250px; // Fixed width for cards
-    height: 300px; // Fixed height for cards
+    cursor: pointer;
+    transition: all 0.3s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     outline: none;
+    border: 2px solid transparent;
+    will-change: transform;
+
+    // Floating animation
+    animation: float 3s ease-in-out infinite;
+
+    &:hover {
+      transform: translateY(-20px) scale(1.1);
+      box-shadow:
+        0 -8px 25px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6),
+        0 12px 40px rgba(0, 0, 0, 0.5);
+    }
 
     &:focus-visible {
       border-color: $primary-color;
       outline: 4px solid $text-light;
       outline-offset: 5px;
-      transform: translateY(-10px) scale(1.03);
+      transform: translateY(-15px) scale(1.05);
       box-shadow:
         0 0 0 10px rgba(0, 0, 0, 0.22),
         0 18px 40px rgba(0, 0, 0, 0.45);
       background-color: lighten($secondary-color, 6%);
     }
 
-    &:hover {
-      transform: translateY(-15px) scale(1.02);
-      box-shadow:
-        0 -8px 25px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6),
-        0 12px 35px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6);
+    &.expanded {
+      transform: scale(0.8) translateY(400px);
+      opacity: 0.3;
+      pointer-events: none;
     }
 
-    h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: $text-light;
+    // Different animation delays for each bubble to create staggered effect
+    &.bubble-0 {
+      animation-delay: 0s;
     }
 
-    .work-with-image {
-      width: 150px; /* Set fixed width */
-      height: 150px; /* Set fixed height */
+    &.bubble-1 {
+      animation-delay: 0.5s;
+    }
+
+    &.bubble-2 {
+      animation-delay: 1s;
+    }
+
+    &.bubble-3 {
+      animation-delay: 0.3s;
+    }
+
+    &.bubble-4 {
+      animation-delay: 0.8s;
+    }
+
+    &.bubble-5 {
+      animation-delay: 1.2s;
+    }
+
+    .bubble-image {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid $primary-color;
+      margin-bottom: 10px;
+    }
+
+    .bubble-name {
+      font-size: 1rem;
+      margin: 0;
+      color: $text-light;
+      font-weight: 600;
+      max-width: 100%;
+      word-wrap: break-word;
     }
   }
 
-  @media (max-width: 768px) {
-    padding: 60px 10px;
-    min-height: auto; /* Allow height to fit content on mobile */
+  /* Modal Styles */
+  .bubble-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.3s ease;
+  }
 
+  .bubble-modal {
+    background-color: $secondary-color;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    position: relative;
+    text-align: center;
+    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    .swiper {
-      padding-top: 40px;
-      padding-bottom: 40px;
-
-      .swiper-slide {
-        width: 200px; /* Match work-with-card width for mobile */
-        height: 250px; /* Match work-with-card height for mobile */
-      }
+    .modal-image {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid $primary-color;
+      margin-bottom: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .work-with-card {
-      width: 200px; // Adjust for mobile
-      height: 250px; // Adjust for mobile
-      padding: 20px;
+    h2 {
+      font-size: 2rem;
+      margin: 20px 0;
+      color: $text-light;
+    }
 
-      h3 {
-        font-size: 1rem;
-      }
-
-      .work-with-image {
-        width: 150px; /* Set fixed width for mobile */
-        height: 150px; /* Set fixed height for mobile */
-      }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: transparent;
+      border: none;
+      color: $text-light;
+      font-size: 2rem;
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      outline: none;
 
       &:hover {
-        transform: none;
-        box-shadow: none;
+        background-color: rgba($primary-color, 0.2);
+        transform: rotate(90deg);
       }
 
       &:focus-visible {
-        transform: translateY(-4px) scale(1.02);
+        outline: 3px solid $primary-color;
+        outline-offset: 2px;
+        background-color: rgba($primary-color, 0.1);
       }
     }
+  }
+
+  @media (max-width: 1000px) {
+    padding: 60px 10px;
+
+    .work-with-title {
+      font-size: 1.8rem;
+      margin-bottom: 40px;
+    }
+
+    .bubbles-container {
+      height: auto;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .bubble {
+      width: 150px;
+      height: 150px;
+
+      .bubble-image {
+        width: 90px;
+        height: 90px;
+      }
+
+      .bubble-name {
+        font-size: 0.85rem;
+      }
+
+      &:hover {
+        transform: translateY(-10px) scale(1.08);
+      }
+
+      &:focus-visible {
+        transform: translateY(-10px) scale(1.05);
+      }
+    }
+
+    .bubble-modal {
+      padding: 30px;
+
+      .modal-image {
+        width: 200px;
+        height: 200px;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  @media (max-width: 380px) {
+    padding: 60px 8px;
+
+    .work-with-title {
+      font-size: 1.4rem;
+      margin-bottom: 35px;
+    }
+
+    .bubbles-container {
+      height: auto;
+      gap: 35px;
+      padding: 20px 10px;
+    }
+
+    .bubble {
+      width: 110px;
+      height: 110px;
+
+      .bubble-image {
+        width: 65px;
+        height: 65px;
+      }
+
+      .bubble-name {
+        font-size: 0.7rem;
+      }
+
+      &:hover {
+        transform: translateY(-5px) scale(1.05);
+      }
+
+      &:focus-visible {
+        transform: translateY(-5px) scale(1.03);
+        outline-offset: 3px;
+      }
+    }
+
+    .bubble-modal {
+      padding: 20px;
+      width: 95%;
+
+      .modal-image {
+        width: 150px;
+        height: 150px;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      .modal-close {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+/* Keyframe Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

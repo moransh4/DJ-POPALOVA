@@ -7,8 +7,10 @@ export const metadata = {
 
 export default function AccessibilityStatementPage() {
   return (
-    <main className={styles.container} dir="rtl" lang="he">
-      <h1 className={styles.title}>הצהרת נגישות</h1>
+    <main className={styles.container} dir="rtl" lang="he" aria-labelledby="accessibility-title">
+      <h1 id="accessibility-title" className={styles.title}>
+        הצהרת נגישות
+      </h1>
 
       <p className={styles.lead}>
         אנו שמים דגש רב על מתן שירות שוויוני ונגיש לכלל המשתמשים, כולל אנשים עם מוגבלויות. מטרתנו
@@ -44,19 +46,46 @@ export default function AccessibilityStatementPage() {
       </p>
 
       <div className={styles.contact}>
-        <p className={styles.contactTitle}>פרטי יצירת קשר לנגישות:</p>
-        <p className={styles.contactDetails}>
-          <span className={styles.contactLabel}>שם איש קשר:</span> ואדים פופלבסקי
-          <br />
-          <span className={styles.contactLabel}>טלפון:</span> 054-44432984
-          <br />
-          <span className={styles.contactLabel}>דוא"ל:</span> v1987p@gmail.com
-          <br />
-          <span className={styles.contactLabel}>שעות פעילות:</span> בימים א'-ה' 08:00-17:00
+        <p id="contact-details-title" className={styles.contactTitle}>
+          פרטי יצירת קשר לנגישות:
         </p>
+        <dl className={styles.contactDetails} aria-labelledby="contact-details-title">
+          <div className={styles.contactRow}>
+            <dt className={styles.contactLabel}>שם איש קשר:</dt>
+            <dd>ואדים פופלבסקי</dd>
+          </div>
+          <div className={styles.contactRow}>
+            <dt className={styles.contactLabel}>טלפון:</dt>
+            <dd>
+              <a
+                className={styles.contactLink}
+                href="tel:+972544432984"
+                aria-label="התקשרו למספר 054-44432984"
+              >
+                054-44432984
+              </a>
+            </dd>
+          </div>
+          <div className={styles.contactRow}>
+            <dt className={styles.contactLabel}>דוא&quot;ל:</dt>
+            <dd>
+              <a
+                className={styles.contactLink}
+                href="mailto:v1987p@gmail.com"
+                aria-label="שליחת אימייל לכתובת v1987p@gmail.com"
+              >
+                v1987p@gmail.com
+              </a>
+            </dd>
+          </div>
+          <div className={styles.contactRow}>
+            <dt className={styles.contactLabel}>שעות פעילות:</dt>
+            <dd>בימים א&#x27;-ה&#x27; 08:00-17:00</dd>
+          </div>
+        </dl>
       </div>
 
-      <p className={styles.updated}>הצהרה זו עודכנה בתאריך: 15.01.2026</p>
+      <p className={styles.updated}>הצהרה זו עודכנה בתאריך: 14.04.2026</p>
     </main>
   )
 }

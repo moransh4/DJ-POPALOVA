@@ -1,40 +1,48 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import './Footer.scss';
+import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
+import './Footer.scss'
 
 const Footer = () => {
-  const [showButton, setShowButton] = useState(false);
-  
+  const [showButton, setShowButton] = useState(false)
+
   useEffect(() => {
     const handleScroll = () => {
-      const reviewsSection = document.getElementById('about-section');
+      const reviewsSection = document.getElementById('about-section')
       if (reviewsSection) {
-        const sectionTop = reviewsSection.getBoundingClientRect().top;
-        const scrolledPast = sectionTop <= 0;
-        setShowButton(scrolledPast);
+        const sectionTop = reviewsSection.getBoundingClientRect().top
+        const scrolledPast = sectionTop <= 0
+        setShowButton(scrolledPast)
       }
-    };
+    }
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
- 
   return (
-    <div className="footer">
-    {showButton && (
-      <button onClick={scrollToTop} className="button-up"></button>
-    )}
-    <p>Developed by Moran Sharabi</p>
-    <Link href="/accessibility" className="accessibility-link" aria-label="הצהרת נגישות">הצהרת נגישות</Link>
-  </div>
-  );
-};
+    <footer className="footer" role="contentinfo" lang="he" dir="rtl">
+      {showButton && (
+        <button
+          onClick={scrollToTop}
+          className="button-up"
+          aria-label="חזרה לראש העמוד"
+          title="חזרה לראש העמוד"
+        />
+      )}
+      <Link href="/accessibility" className="accessibility-link">
+        הצהרת נגישות
+      </Link>
+      <p lang="en" dir="ltr">
+        Developed by Moran Sharabi
+      </p>
+    </footer>
+  )
+}
 
-export default Footer;
+export default Footer

@@ -119,7 +119,7 @@ const Reviews = () => {
       dir="rtl"
     >
       <h2 id="reviews-heading" className="reviews-title">
-        חוות דעת מלקוחות
+        המלצות
       </h2>
       <Swiper
         modules={[Pagination, Navigation, Autoplay, Keyboard, A11y]}
@@ -168,7 +168,7 @@ const Reviews = () => {
         {reviews.map((review) => (
           <SwiperSlide key={review.id} aria-label={`חוות דעת של ${review.reviewerName}`}>
             <div
-              className="review-card"
+              className={`review-card ${review.reviewerPicture?.url ? 'review-card--photo' : 'review-card--text'}`}
               tabIndex={0}
               role="group"
               aria-label={`חוות דעת של ${review.reviewerName}, דירוג ${review.rating} מתוך 5, מתאריך ${formatReviewDate(review.date)}`}
@@ -185,22 +185,30 @@ const Reviews = () => {
                   <span className="sr-only">חוות דעת של {review.reviewerName}</span>
                 </>
               ) : (
-                <>
-                  {review.reviewAvatar && review.reviewAvatar.url && (
-                    <Image
-                      src={review.reviewAvatar.url}
-                      alt=""
-                      aria-hidden="true"
-                      width={80}
-                      height={80}
-                      className="reviewer-avatar"
-                    />
-                  )}
+                <div className="review-card-content">
+                  <div className="review-card-accent" aria-hidden="true" />
+                  <p className="review-quote-mark" aria-hidden="true">
+                    &rdquo;
+                  </p>
                   <StarRating rating={review.rating} />
                   <p className="review-text">&quot;{review.reviewText}&quot;</p>
-                  <p className="client-name">{review.reviewerName}</p>
-                  <p className="review-date">{formatReviewDate(review.date)}</p>
-                </>
+                  <div className="review-footer">
+                    {review.reviewAvatar && review.reviewAvatar.url && (
+                      <Image
+                        src={review.reviewAvatar.url}
+                        alt=""
+                        aria-hidden="true"
+                        width={72}
+                        height={72}
+                        className="reviewer-avatar"
+                      />
+                    )}
+                    <div className="review-footer-meta">
+                      <p className="client-name">{review.reviewerName}</p>
+                      <p className="review-date">{formatReviewDate(review.date)}</p>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           </SwiperSlide>
