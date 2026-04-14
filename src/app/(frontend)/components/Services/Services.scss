@@ -81,31 +81,32 @@
       padding: 60px 15px;
 
       .services-title {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
         margin-bottom: 2rem;
       }
 
       .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+
+          .service-item {
+          padding: 20px;
+
+          &:hover, &:active { /* Disable hover and active effects for mobile */
+            transform: none;
+            box-shadow: none;
+          }
+
+          img {
+            width: 60px;
+            height: 60px;
+          }
+
+          h3 {
+            font-size: 1rem;
+          }
+        }
       }
 
-      .service-item {
-        padding: 20px;
-
-        &:hover, &:active { /* Disable hover and active effects for mobile */
-          transform: none;
-          box-shadow: none;
-        }
-
-        img {
-          width: 60px;
-          height: 60px;
-        }
-
-        h3 {
-          font-size: 1.2rem;
-        }
-      }
     }
   }

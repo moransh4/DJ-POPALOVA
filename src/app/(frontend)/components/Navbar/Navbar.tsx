@@ -179,7 +179,7 @@ const Navbar: React.FC = () => {
                 onClick={(e) => handleScrollToSection(e, 'contact-section')}
                 onKeyDown={(e) => handleKeyDown(e, 'contact-section')}
               >
-                יצירת קשר
+                צור קשר
               </a>
             </li>
           </ul>
