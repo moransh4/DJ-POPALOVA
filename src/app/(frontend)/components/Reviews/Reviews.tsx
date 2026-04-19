@@ -429,7 +429,7 @@ const Reviews = () => {
                 דירוג נבחר: {formState.rating} מתוך 5
               </p>
 
-              <label htmlFor="review-picture">או העלאת תמונה מלאה לביקורת (אופציונלי)</label>
+              {/* <label htmlFor="review-picture">או העלאת תמונה מלאה לביקורת (אופציונלי)</label>
               <input
                 id="review-picture"
                 type="file"
@@ -440,7 +440,7 @@ const Reviews = () => {
                     reviewerPictureFile: e.target.files?.[0] || null,
                   }))
                 }
-              />
+              /> */}
 
               <button
                 type="submit"
