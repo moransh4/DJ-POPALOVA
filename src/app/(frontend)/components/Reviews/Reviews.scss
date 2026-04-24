@@ -1,4 +1,5 @@
-@import '../../styles/variables';
+@use 'sass:color';
+@use '../../styles/variables' as *;
 
 #reviews-section {
     background-color: $primary-color; /* Changed background to primary-color for alternation */
@@ -54,7 +55,7 @@
 
       &--photo {
         padding: 0;
-        background-color: darken($secondary-color, 2%);
+        background-color: color.adjust($secondary-color, $lightness: -2%);
       }
 
       &--text {
@@ -72,14 +73,14 @@
         box-shadow:
           0 0 0 10px rgba(0, 0, 0, 0.2),
           0 18px 40px rgba(0, 0, 0, 0.45);
-        background-color: lighten($secondary-color, 6%);
+        background-color: color.adjust($secondary-color, $lightness: 6%);
       }
 
       &:hover {
         transform: translateY(-15px) scale(1.02); /* More pronounced lift and slight scale */
         box-shadow: 
-          0 -8px 25px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6), /* Top glow */
-          0 12px 35px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6); /* Bottom glow */
+          0 -8px 25px rgba(color.channel($primary-color, 'red', $space: rgb), color.channel($primary-color, 'green', $space: rgb), color.channel($primary-color, 'blue', $space: rgb), 0.6), /* Top glow */
+          0 12px 35px rgba(color.channel($primary-color, 'red', $space: rgb), color.channel($primary-color, 'green', $space: rgb), color.channel($primary-color, 'blue', $space: rgb), 0.6); /* Bottom glow */
       }
 
       .review-card-content {
@@ -92,7 +93,7 @@
         justify-content: flex-start;
         padding: 34px 28px 30px;
         background:
-          radial-gradient(circle at top right, rgba(red($primary-color), green($primary-color), blue($primary-color), 0.18), transparent 32%),
+          radial-gradient(circle at top right, rgba(color.channel($primary-color, 'red', $space: rgb), color.channel($primary-color, 'green', $space: rgb), color.channel($primary-color, 'blue', $space: rgb), 0.18), transparent 32%),
           linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
       }
 
@@ -103,7 +104,7 @@
         width: 72px;
         height: 72px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(red($primary-color), green($primary-color), blue($primary-color), 0.3), transparent 70%);
+        background: radial-gradient(circle, rgba(color.channel($primary-color, 'red', $space: rgb), color.channel($primary-color, 'green', $space: rgb), color.channel($primary-color, 'blue', $space: rgb), 0.3), transparent 70%);
         pointer-events: none;
       }
 
@@ -111,7 +112,7 @@
         font-size: 4.5rem;
         line-height: 0.8;
         margin: 0 0 0.25rem;
-        color: rgba(red($primary-color), green($primary-color), blue($primary-color), 0.9);
+        color: rgba(color.channel($primary-color, 'red', $space: rgb), color.channel($primary-color, 'green', $space: rgb), color.channel($primary-color, 'blue', $space: rgb), 0.9);
         align-self: flex-start;
       }
 
@@ -254,7 +255,7 @@
 
       &:hover {
         transform: translateY(-2px);
-        background-color: lighten($secondary-color, 8%);
+        background-color: color.adjust($secondary-color, $lightness: 8%);
       }
 
       &:focus-visible {

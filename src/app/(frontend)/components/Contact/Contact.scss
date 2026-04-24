@@ -1,4 +1,5 @@
-@import '../../styles/variables';
+@use 'sass:color';
+@use '../../styles/variables' as *;
 
 #contact-section {
   background-color: $background-dark; /* Dark background */
@@ -76,7 +77,7 @@
           &:focus {
             border-color: $primary-color; /* Accent color on focus */
             outline: none;
-            box-shadow: 0 0 0 2px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.5);
+            box-shadow: 0 0 0 2px rgba(color.channel($primary-color, 'red', $space: rgb), color.channel($primary-color, 'green', $space: rgb), color.channel($primary-color, 'blue', $space: rgb), 0.5);
           }
         }
 
@@ -96,7 +97,7 @@
           transition: background-color 0.3s ease, transform 0.3s ease;
 
           &:hover {
-            background-color: darken($primary-color, 10%); /* Slightly darker on hover */
+            background-color: color.adjust($primary-color, $lightness: -10%); /* Slightly darker on hover */
             transform: translateY(-2px);
           }
         }
