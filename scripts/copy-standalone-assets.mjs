@@ -18,3 +18,4 @@ const copyIfExists = (sourceRelative, destRelative) => {
 copyIfExists('.next/static', '.next/standalone/.next/static')
 copyIfExists('public', '.next/standalone/public')
 copyIfExists('media', '.next/standalone/media')
+copyIfExists('gallery', '.next/standalone/gallery')
