@@ -6,7 +6,7 @@
   "type": "module",
   "homepage": "https://moransh4.github.io/DJ-POPALOVA",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build && cp -r .next/static .next/standalone/.next/static && cp -r public .next/standalone/public",
+    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build && node scripts/copy-standalone-assets.mjs",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
