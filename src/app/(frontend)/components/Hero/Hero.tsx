@@ -42,8 +42,9 @@ const Hero = () => {
     }
 
     const soundShouldBeEnabled = window.localStorage.getItem(SOUND_PREFERENCE_KEY) === 'true'
+    const isCoarsePointerDevice = window.matchMedia('(pointer: coarse)').matches
 
-    if (!soundShouldBeEnabled) {
+    if (!soundShouldBeEnabled || isCoarsePointerDevice) {
       return
     }
 
@@ -61,17 +62,14 @@ const Hero = () => {
 
       window.removeEventListener('pointerdown', enableSoundAfterInteraction)
       window.removeEventListener('keydown', enableSoundAfterInteraction)
-      window.removeEventListener('touchstart', enableSoundAfterInteraction)
     }
 
     window.addEventListener('pointerdown', enableSoundAfterInteraction)
     window.addEventListener('keydown', enableSoundAfterInteraction)
-    window.addEventListener('touchstart', enableSoundAfterInteraction)
 
     return () => {
       window.removeEventListener('pointerdown', enableSoundAfterInteraction)
       window.removeEventListener('keydown', enableSoundAfterInteraction)
-      window.removeEventListener('touchstart', enableSoundAfterInteraction)
     }
   }, [])
 
