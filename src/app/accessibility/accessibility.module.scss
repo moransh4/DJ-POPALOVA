@@ -1,4 +1,4 @@
-@import '../(frontend)/styles/_variables.scss';
+@use '../(frontend)/styles/variables' as *;
 
 // Dark-theme accessibility page
 // Contrast ratios verified against WCAG 2.1 AA:

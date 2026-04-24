@@ -1,4 +1,5 @@
-@import '../../styles/variables';
+@use 'sass:color';
+@use '../../styles/variables' as *;
 
 #work-with-section {
   background-color: $background-dark;
@@ -58,7 +59,7 @@
     &:hover {
       transform: translateY(-20px) scale(1.1);
       box-shadow:
-        0 -8px 25px rgba(red($primary-color), green($primary-color), blue($primary-color), 0.6),
+        0 -8px 25px rgba(color.channel($primary-color, 'red', $space: rgb), color.channel($primary-color, 'green', $space: rgb), color.channel($primary-color, 'blue', $space: rgb), 0.6),
         0 12px 40px rgba(0, 0, 0, 0.5);
     }
 
@@ -70,7 +71,7 @@
       box-shadow:
         0 0 0 10px rgba(0, 0, 0, 0.22),
         0 18px 40px rgba(0, 0, 0, 0.45);
-      background-color: lighten($secondary-color, 6%);
+      background-color: color.adjust($secondary-color, $lightness: 6%);
     }
 
     &.expanded {
