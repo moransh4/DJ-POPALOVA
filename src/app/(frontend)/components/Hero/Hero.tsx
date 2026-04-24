@@ -123,6 +123,7 @@ const Hero = () => {
         ref={videoRef}
         className="hero-video"
         autoPlay
+        preload="auto"
         muted={isMuted} /* Use isMuted state */
         playsInline
         onEnded={handleVideoEnded}
