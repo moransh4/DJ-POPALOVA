@@ -25,9 +25,11 @@ if (fs.existsSync(publicSrc) && !fs.existsSync(publicDest)) {
 
 const child = spawn(process.execPath, [serverPath], {
     stdio: 'inherit',
-    env: process.env,
-})
-
+  env: {
+    ...process.env,
+    PORT: process.env.PORT || '3000',
+    HOSTNAME: '0.0.0.0',
+  },
 child.on('exit', (code, signal) => {
     if (signal) {
         process.kill(process.pid, signal)
