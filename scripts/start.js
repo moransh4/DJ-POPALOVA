@@ -10,11 +10,11 @@ const publicSrc = path.join(root, 'public')
 const publicDest = path.join(standalone, 'public')
 
 if (fs.existsSync(staticSrc) && !fs.existsSync(staticDest)) {
-  execSync(`cp -r "${staticSrc}" "${staticDest}"`, { stdio: 'inherit' })
+    execSync(`cp -r "${staticSrc}" "${staticDest}"`, { stdio: 'inherit' })
 }
 
 if (fs.existsSync(publicSrc) && !fs.existsSync(publicDest)) {
-  execSync(`cp -r "${publicSrc}" "${publicDest}"`, { stdio: 'inherit' })
+    execSync(`cp -r "${publicSrc}" "${publicDest}"`, { stdio: 'inherit' })
 }
 
 require(path.join(standalone, 'server.js'))
