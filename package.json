@@ -4,6 +4,7 @@
   "description": "Official website of DJ POPALOVA - events, gallery, reviews, and booking",
   "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@10.33.2",
   "homepage": "https://moransh4.github.io/DJ-POPALOVA",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build && node scripts/copy-standalone-assets.mjs",
@@ -59,7 +60,7 @@
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0",
-    "pnpm": "^9 || ^10"
+    "pnpm": "10.33.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
