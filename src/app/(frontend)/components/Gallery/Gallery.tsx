@@ -1,15 +1,12 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-// Removed Swiper imports
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import { Pagination, Navigation, Autoplay } from 'swiper/modules';
-
-// Removed Swiper styles
-// import 'swiper/css';
-// import 'swiper/css/pagination';
-// import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectCoverflow, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
 
 import './Gallery.scss'
 
@@ -24,6 +21,27 @@ const Gallery = () => {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
+
+  const selectedImage = selectedIndex !== null ? galleryImages[selectedIndex] : null
+
+  const closeLightbox = () => setSelectedIndex(null)
+
+  const showNext = () => {
+    if (!galleryImages.length || selectedIndex === null) {
+      return
+    }
+    setSelectedIndex((selectedIndex + 1) % galleryImages.length)
+  }
+
+  const showPrev = () => {
+    if (!galleryImages.length || selectedIndex === null) {
+      return
+    }
+    setSelectedIndex((selectedIndex - 1 + galleryImages.length) % galleryImages.length)
+  }
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
@@ -45,6 +63,59 @@ const Gallery = () => {
 
     fetchGalleryImages()
   }, [])
+
+  useEffect(() => {
+    if (selectedIndex === null) {
+      return
+    }
+
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeLightbox()
+      } else if (event.key === 'ArrowRight') {
+        showNext()
+      } else if (event.key === 'ArrowLeft') {
+        showPrev()
+      }
+    }
+
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeydown)
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  }, [selectedIndex, galleryImages.length])
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null
+    touchEndX.current = null
+  }
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchEndX.current = event.touches[0]?.clientX ?? null
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) {
+      return
+    }
+
+    const diff = touchStartX.current - touchEndX.current
+    const threshold = 40
+
+    if (Math.abs(diff) < threshold) {
+      return
+    }
+
+    if (diff > 0) {
+      showNext()
+    } else {
+      showPrev()
+    }
+  }
 
   if (loading) {
     return (
@@ -81,19 +152,143 @@ const Gallery = () => {
       <h2 id="gallery-heading" className="gallery-title">
         הגלריה שלי
       </h2>
+
+      <div className="gallery-mobile-swiper" aria-label="גלריית מובייל בתלת מימד">
+        <Swiper
+          modules={[EffectCoverflow, Pagination]}
+          effect="coverflow"
+          grabCursor
+          centeredSlides
+          slidesPerView={1.2}
+          spaceBetween={12}
+          coverflowEffect={{
+            rotate: 28,
+            stretch: 0,
+            depth: 130,
+            modifier: 1,
+            slideShadows: false,
+          }}
+          pagination={{ clickable: true }}
+          dir="rtl"
+          className="gallery-swiper-instance"
+        >
+          {galleryImages.map((item, index) => (
+            <SwiperSlide key={item.id}>
+              <div className="gallery-mobile-slide-card" aria-hidden="true">
+                <Image
+                  src={item.url}
+                  alt={item.alt?.trim() || `תמונה מהגלריה ${index + 1}`}
+                  fill
+                  sizes="100vw"
+                  className="gallery-mobile-slide-image"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
       <ul className="gallery-grid" aria-label="גלריית תמונות">
         {galleryImages.map((item, index) => (
           <li key={item.id} className="gallery-item">
-            <Image
-              src={item.url}
-              alt={item.alt?.trim() || `תמונה מהגלריה ${index + 1}`}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive sizes
-              className="gallery-image"
-            />
+            <button
+              type="button"
+              className="gallery-open-button"
+              aria-label={`פתח תמונה ${index + 1} בגודל מלא`}
+              onClick={() => setSelectedIndex(index)}
+            >
+              <Image
+                src={item.url}
+                alt={item.alt?.trim() || `תמונה מהגלריה ${index + 1}`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Responsive sizes
+                className="gallery-image"
+              />
+            </button>
           </li>
         ))}
       </ul>
+
+      {selectedImage && (
+        <div
+          className="gallery-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="תצוגת תמונה מוגדלת"
+          onClick={closeLightbox}
+        >
+          <button
+            type="button"
+            className="gallery-lightbox-nav gallery-lightbox-nav-prev"
+            aria-label="תמונה קודמת"
+            onClick={(event) => {
+              event.stopPropagation()
+              showPrev()
+            }}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            className="gallery-lightbox-nav gallery-lightbox-nav-next"
+            aria-label="תמונה הבאה"
+            onClick={(event) => {
+              event.stopPropagation()
+              showNext()
+            }}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            className="gallery-lightbox-close"
+            aria-label="סגור תצוגת תמונה"
+            onClick={closeLightbox}
+          >
+            ×
+          </button>
+          <div
+            className="gallery-lightbox-content"
+            onClick={(event) => event.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <Image
+              src={selectedImage.url}
+              alt={selectedImage.alt?.trim() || 'תמונה מהגלריה'}
+              fill
+              sizes="100vw"
+              className="gallery-lightbox-image"
+              priority
+            />
+          </div>
+        </div>
+      )}
     </section>
   )
 }

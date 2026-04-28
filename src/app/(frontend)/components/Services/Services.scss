@@ -15,6 +15,7 @@
 
     .services-title {
       color: $text-dark; /* Changed to black */
+      font-weight: 700;
     }
 
     .services-grid {
@@ -70,7 +71,7 @@
 
         h3 {
           font-size: 1.4rem;
-          font-weight: bold;
+          font-weight: 700;
           color: $text-dark; /* Changed to black */
           margin-top: 0;
           margin-bottom: 0;
@@ -105,6 +106,7 @@
 
           h3 {
             font-size: 1rem;
+            font-weight: 700;
           }
         }
       }

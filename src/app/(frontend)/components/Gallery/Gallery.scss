@@ -13,45 +13,85 @@
   justify-content: center;
 
   .gallery-title {
-    display: none; /* Hide the title */
-    /* font-size: 3rem; */
-    /* margin-bottom: 3rem; */
-    /* color: $text-dark; */
-    /* font-weight: bold; */
+    display: block;
+    margin: 40px 0;
+    color: $primary-color;
+  }
+
+  .gallery-mobile-swiper {
+    display: none;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+
+    .gallery-swiper-instance {
+      padding: 14px 0 34px;
+    }
+
+    .swiper-slide {
+      height: 320px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    .swiper-pagination-bullet {
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      opacity: 0.7;
+    }
+
+    .swiper-pagination-bullet-active {
+      opacity: 1;
+      background: $primary-color;
+    }
+  }
+
+  .gallery-mobile-slide-card {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .gallery-mobile-slide-image {
+    object-fit: cover;
   }
 
   .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid columns */
-    gap: 0px; /* Removed gap between images */
+    column-count: 3;
+    column-gap: 0;
     max-width: 1400px; /* Max width for the grid */
     width: 100%;
     list-style: none;
     padding: 0;
-    margin-top: 30px;
+    margin-top: 0;
     margin-bottom: 0;
-    /* Reverted grid-auto-rows and grid-auto-flow: dense */
   }
 
   .gallery-item {
     position: relative;
+    display: block;
     width: 100%;
-    grid-column: span 1; 
     padding-bottom: 75%; /* Aspect ratio 4:3 (height is 75% of width) */
     background-color: $secondary-color; /* Placeholder background */
     border-radius: 0; /* Removed border-radius */
     overflow: hidden;
-    border: 5px solid $text-light; /* Thinner white border 5px */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 0;
+    box-shadow: none;
+    margin: 0;
+    break-inside: avoid;
+    cursor: pointer;
 
     /* Styles for different image sizes within the grid */
     &:nth-child(3n + 1) { /* Every 3rd item starting from 1st */
-      grid-column: span 3; /* Make it wider */
       padding-bottom: 50%; /* Adjust aspect ratio for wider images */
     }
 
     &:nth-child(4n + 2) { /* Every 4th item starting from 2nd */
-      grid-row: span 4; /* Make it taller */
       padding-bottom: 150%; /* Adjust aspect ratio for taller images (e.g., 3:2) */
     }
 
@@ -63,15 +103,125 @@
       }
     }
 
-    &:focus-within {
-      outline: 4px solid $primary-color;
-      outline-offset: 2px;
-    }
+    // &:focus-within {
+    //   outline: 4px solid $primary-color;
+    //   outline-offset: 2px;
+    // }
 
     .gallery-image {
       object-fit: cover;
       border-radius: 0; /* Remove border-radius here, it's on the item */
       transition: transform 0.3s ease; /* Smooth transition for scale */
+    }
+
+    .gallery-open-button {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+    }
+  }
+
+  .gallery-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+  }
+
+  .gallery-lightbox-content {
+    position: relative;
+    width: min(1200px, 95vw);
+    height: min(86vh, 820px);
+  }
+
+  .gallery-lightbox-image {
+    object-fit: contain;
+  }
+
+  .gallery-lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: $text-dark;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1001;
+
+    &:focus-visible {
+      outline: 3px solid $primary-color;
+      outline-offset: 2px;
+    }
+  }
+
+  .gallery-lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: $text-dark;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.3s ease;
+    line-height: 0;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.98);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    &:focus-visible {
+      outline: 3px solid $primary-color;
+      outline-offset: 2px;
+    }
+  }
+
+  .gallery-lightbox-nav-prev {
+    left: 16px;
+    svg{
+      position: relative;
+      left: -1px;
+    }
+  }
+
+  .gallery-lightbox-nav-next {
+    right: 16px;
+    svg{
+      position: relative;
+      right: -1px;
     }
   }
 
@@ -86,21 +236,24 @@
       margin-bottom: 2rem;
     }
 
-    .gallery-grid {
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust for mobile */
-      gap: 0px; /* Removed gap on mobile */
+    .gallery-mobile-swiper {
+      display: block;
     }
 
-    .gallery-item {
-      padding-bottom: 100%; /* Square aspect ratio on mobile */
-      border: 5px solid $text-light; /* Thinner border on mobile */
-      border-radius: 0; /* Removed border-radius for mobile */
+    .gallery-grid {
+      display: none;
+    }
 
-      &:nth-child(3n + 1), &:nth-child(4n + 2) {
-        grid-column: span 1; /* Reset to single column on mobile */
-        grid-row: span 1; /* Reset to single row on mobile */
-        padding-bottom: 100%; /* Keep square on mobile */
-      }
+    .gallery-lightbox-nav {
+      width: 42px;
+      height: 42px;
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid {
+      column-count: 1;
     }
   }
 }

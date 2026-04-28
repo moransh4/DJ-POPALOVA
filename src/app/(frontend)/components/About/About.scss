@@ -24,10 +24,10 @@
       display: block;
       flex: 0 0 50%;
       max-width: 50%;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      align-self: flex-start;
+      position: relative;
+      min-height: 100%;
+      height: auto;
+      align-self: stretch;
       overflow: hidden;
       background-image: url('./images/about.jpg');
       background-size: cover;
@@ -85,7 +85,7 @@
 
     @media (max-width: 768px) {
       flex-direction: column;
-      padding: 30px 15px;
+      padding: 0;
       min-height: auto;
 
       h2 {
@@ -106,7 +106,7 @@
       .about-content {
         flex: 0 0 100%;
         max-width: 100%;
-        padding: 0;
+        padding: 30px 15px;
         text-align: center;
         overflow-y: visible;
       }
