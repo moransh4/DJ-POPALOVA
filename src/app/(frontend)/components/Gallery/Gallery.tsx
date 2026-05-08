@@ -150,7 +150,7 @@ const Gallery = () => {
       dir="rtl"
     >
       <h2 id="gallery-heading" className="gallery-title">
-        הגלריה שלי
+        גלריה
       </h2>
 
       <div className="gallery-mobile-swiper" aria-label="גלריית מובייל בתלת מימד">

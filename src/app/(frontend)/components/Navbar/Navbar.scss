@@ -9,7 +9,7 @@
     text-align: center;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: rgba(0, 0, 0, 0.8); /* Darker than video opacity */
+    background-color: rgb(0 0 0 / 28%); /* Semi-transparent black background */
     transition: background-color 0.6s ease, color 0.6s ease, transform 0.3s ease, opacity 0.25s ease, visibility 0.25s ease; /* Add transform to transition */
     direction: rtl;
 
@@ -189,7 +189,7 @@
       .logo{
         a{
           img{
-            width: 65px;
+            width: 80px;
           }
         }
       }

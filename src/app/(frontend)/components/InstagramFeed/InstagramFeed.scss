@@ -1,58 +1,204 @@
 @use '../../styles/variables' as *;
 
 #instagram-feed-section {
-  background-color: $primary-color; /* Changed background to primary color for alternation */
+  background: $primary-color;
   padding: 80px 15px;
   color: $text-light;
   text-align: center;
-  direction: rtl; /* Right-to-left direction */
-  min-height: 100vh; /* Adjust height as needed */
+  direction: rtl;
+  min-height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  align-content: center;
-  justify-items: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    animation: subtleShift 30s ease-in-out infinite;
+  }
+
+  @keyframes subtleShift {
+    0%, 100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
 
   .instagram-feed-title {
-    color: $text-dark; /* Accent color */
+    color: $text-dark;
+    font-weight: 700;
+    margin-bottom: 24px;
+    font-size: 2.5rem;
+    position: relative;
+    z-index: 1;
+    animation: slideInDown 0.8s ease-out;
+  }
+
+  @keyframes slideInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .instagram-feed-state {
+    color: $text-dark;
+    margin: 12px 0;
+    font-weight: 600;
+    font-size: 1.2rem;
+    animation: fadeInUp 0.6s ease-out;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .instagram-feed-state-error {
+    color: #7a0f14;
   }
 
   .instagram-posts-grid {
-    display: flex; /* Changed to flexbox */
-    // Removed flex-wrap: wrap; to keep all items on one line
-    white-space: nowrap; /* Keep all items on a single line */
-    overflow-x: auto; /* Enable horizontal scrolling */
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    // Removed align-items: center; as it's not relevant for single line overflow
-    gap: 15px; /* Set gap to 15px */
-    max-width: 1200px;
+    gap: 30px;
     width: 100%;
-    margin-top: 30px;
-    // Removed grid-template-columns, align-content as they are grid-specific
+    margin-top: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .instagram-swiper-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 1400px;
+    margin-top: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .swiper-button-prev-custom,
+  .swiper-button-next-custom {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    user-select: none;
+
+    span {
+      display: block;
+      width: 25px;
+      height: 25px;
+      border-top: 6px solid #000;
+      border-right: 6px solid #000;
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+  }
+
+  // RTL: prev arrow points right (→), next arrow points left (←)
+  .swiper-button-prev-custom span {
+    transform: rotate(45deg);
+  }
+
+  .swiper-button-next-custom span {
+    transform: rotate(-135deg);
+  }
+
+  .instagram-swiper {
+    flex: 1;
+    min-width: 0;
+    padding-bottom: 48px !important;
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+    }
+
+    .swiper-pagination-bullet {
+      width: 10px;
+      height: 10px;
+      opacity: 0.45;
+      background: #000;
+    }
+
+    .swiper-pagination-bullet-active {
+      opacity: 1;
+      background: #000;
+    }
   }
 
   .instagram-post-item {
-    position: relative; /* Re-enable position for absolute children */
-    width: 550px; /* Fixed width */
-    height: 650px; /* Fixed height */
-    padding-bottom: 0;
-    min-height: unset; /* No longer needed with fixed height */
-    background-color: $secondary-color; /* Placeholder background */
-    border-radius: 5px;
-    overflow: hidden; /* Re-enable overflow hidden */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Re-enable box-shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Re-enable transition */
-    cursor: pointer;
-    border: 5px solid $text-light; /* White border */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 466px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 4px solid rgba(255, 255, 255, 0.9);
+    background: $secondary-color;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    animation: fadeInScale 0.6s ease-out both;
 
-    iframe{
-        min-width: auto !important;
-        height: -webkit-fill-available !important;
-        margin: 0 !important;
+    @for $i from 1 through 12 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.08}s;
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-15px) scale(1.02);
+
+      &::before {
+        opacity: 1;
+      }
     }
 
     blockquote.instagram-media {
@@ -62,61 +208,103 @@
       min-width: unset !important;
       max-width: 100% !important;
       padding: 0 !important;
-      box-sizing: border-box;
+      border: 0 !important;
+      border-radius: 0 !important;
 
       & > div {
         height: 100% !important;
         padding: 0 !important;
-        box-sizing: border-box;
+      }
 
-        iframe {
-          width: 100% !important;
-          height: 100% !important;
-          display: block;
-        }
+      iframe {
+        width: 100% !important;
+        height: 100% !important;
+        display: block !important;
       }
     }
+  }
 
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @media (max-width: 580px) {
+    .instagram-post-item {
+      width: 100%;
+    }
   }
 
   @media (max-width: 768px) {
     padding: 60px 10px;
-    min-height: 60vh;
 
     .instagram-feed-title {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      line-height: 1; /* Set line-height to be the same as font-size for mobile */
+      font-size: 1.8rem;
+      margin-bottom: 16px;
     }
 
-    .instagram-posts-grid {
-      grid-template-columns: unset;
-      display: flex;
-      // Removed flex-wrap: wrap; for mobile too
-      white-space: nowrap;
-      overflow-x: auto;
-      justify-content: flex-start; /* Align items to the start for scroll snap */
-      // Removed align-items: center; for mobile
-      gap: 15px;
-      scroll-snap-type: x mandatory; /* Enable horizontal scroll snapping */
-      scroll-behavior: smooth; /* Smooth scrolling between snaps */
-      scroll-padding-left: 10px; /* Adjust if your grid has left padding */
-      -webkit-overflow-scrolling: touch; /* Enhance scrolling on iOS */
+    .instagram-swiper-wrapper {
+      gap: 8px;
+      margin-top: 30px;
+    }
+
+    .swiper-button-prev-custom,
+    .swiper-button-next-custom {
+      width: 32px;
+      height: 32px;
+
+      span {
+        width: 25px;
+        height: 25px;
+        border-top: 6px solid #000;
+        border-right: 6px solid #000;
+      }
+    }
+
+    .instagram-swiper {
+      padding-bottom: 40px !important;
     }
 
     .instagram-post-item {
-      width: 280px;
-      height: 330px;
-      padding-bottom: 0;
-      min-height: unset;
-      border: 3px solid $text-light;
-      flex-shrink: 0; /* Prevent items from shrinking */
-      scroll-snap-align: center; /* Make each item snap to the center */
-      // Removed margin-left: 10px; to avoid extra spacing
+      min-height: 500px;
+      border-width: 3px;
+      border-radius: 16px;
+    }
+  }
 
-      &:last-child {
-        // Removed margin-right: 10px; to avoid extra spacing
+  @media (max-width: 420px) {
+    padding: 40px 6px;
+
+    .instagram-feed-title {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    .instagram-swiper-wrapper {
+      gap: 4px;
+    }
+
+    .swiper-button-prev-custom,
+    .swiper-button-next-custom {
+      width: 30px;
+      height: 30px;
+
+      span {
+        width: 25px;
+        height: 25px;
       }
+    }
+
+    .instagram-post-item {
+      min-height: 455px;
+      border-width: 2px;
+      border-radius: 12px;
     }
   }
 }

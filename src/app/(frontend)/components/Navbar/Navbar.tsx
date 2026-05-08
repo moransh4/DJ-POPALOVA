@@ -170,7 +170,7 @@ const Navbar: React.FC = () => {
                 onClick={(e) => handleScrollToSection(e, 'instagram-feed-section')}
                 onKeyDown={(e) => handleKeyDown(e, 'instagram-feed-section')}
               >
-                סרטונים
+                אינסטגרם
               </a>
             </li>
             <li>

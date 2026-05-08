@@ -9,11 +9,17 @@ import partyIcon from 'public/confetti.png'
 import hennaIcon from 'public/henna.png'
 import equipmentIcon from 'public/dj.png'
 import phonograph from 'public/phonograph.png'
+import companyParty from 'public/company-party.png'
+import champagneGlasss from 'public/champagne-glass.png'
 
 const servicesData = [
   {
     title: 'חתונות',
     icon: weddingIcon,
+  },
+  {
+    title: 'אירועי חברה/בוטיק',
+    icon: champagneGlasss,
   },
   {
     title: 'אירועי ילדים ובר/ת מצווה',
@@ -44,7 +50,8 @@ const Services = () => {
       role="region"
       aria-labelledby="services-heading"
       lang="he"
-      dir="rtl">
+      dir="rtl"
+    >
       <h2 id="services-heading" className="services-title">
         השירותים שלי
       </h2>
@@ -54,7 +61,8 @@ const Services = () => {
             className="service-item"
             key={`${service.title}-${index}`}
             tabIndex={0}
-            aria-label={`שירות: ${service.title}`}>
+            aria-label={`שירות: ${service.title}`}
+          >
             <Image src={service.icon} alt="" aria-hidden="true" width={60} height={60} />
             <h3>{service.title}</h3>
           </li>

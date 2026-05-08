@@ -11,7 +11,8 @@ import { Users } from './collections/Users'
 import { About } from './collections/About'
 import { Media } from './collections/Media'
 import { Reviews } from './collections/Reviews'
-import { Gallery } from  './collections/Gallery'
+import { Gallery } from './collections/Gallery'
+import { Instagram } from './collections/Instagram'
 import { WorkWith } from './collections/WorkWith'
 
 const filename = fileURLToPath(import.meta.url)
@@ -24,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media , Reviews, Gallery, WorkWith],
+  collections: [Users, Media, Reviews, Gallery, Instagram, WorkWith],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

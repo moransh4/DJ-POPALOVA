@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     reviews: Review;
     gallery: Gallery;
+    instagram: Instagram;
     'work-with': WorkWith;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     reviews: ReviewsSelect<false> | ReviewsSelect<true>;
     gallery: GallerySelect<false> | GallerySelect<true>;
+    instagram: InstagramSelect<false> | InstagramSelect<true>;
     'work-with': WorkWithSelect<false> | WorkWithSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -199,6 +201,17 @@ export interface Gallery {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instagram".
+ */
+export interface Instagram {
+  id: string;
+  link: string;
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "work-with".
  */
 export interface WorkWith {
@@ -231,6 +244,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'gallery';
         value: string | Gallery;
+      } | null)
+    | ({
+        relationTo: 'instagram';
+        value: string | Instagram;
       } | null)
     | ({
         relationTo: 'work-with';
@@ -350,6 +367,16 @@ export interface GallerySelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instagram_select".
+ */
+export interface InstagramSelect<T extends boolean = true> {
+  link?: T;
+  sortOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
